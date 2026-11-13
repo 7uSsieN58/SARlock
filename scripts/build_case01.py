@@ -165,22 +165,22 @@ case_data = {
             "hotspots": [
                 {
                     "id": "hs-1",
-                    "x": 46,
-                    "y": 42,
+                    "x": 48,
+                    "y": 31,
                     "label": "Winding River Corridor",
                     "description": "A broad dark band flanks the main channel on January 17, appearing bright red in both HH and HV change maps."
                 },
                 {
                     "id": "hs-2",
-                    "x": 64,
-                    "y": 68,
+                    "x": 86,
+                    "y": 78,
                     "label": "Southeastern Rectangular Plots",
                     "description": "Geometric irrigated farm blocks shifted sharply from moderate gray to dark in both polarizations."
                 },
                 {
                     "id": "hs-3",
-                    "x": 22,
-                    "y": 78,
+                    "x": 18,
+                    "y": 84,
                     "label": "Southwestern Dark Basins",
                     "description": "Existing low-backscatter basins remain dark in both passes, showing near-zero change (gray/black) in the difference map."
                 }
