@@ -14,11 +14,6 @@
         <div class="logo">
             <img src="assets/images/logo_nobg_circular.png" alt="">
         </div>
-        <div class="pages">
-            <a href="index.html">Home</a>
-            <a href="map.html" class="chosen">Map</a>
-            <a href="">Story Mode</a>
-        </div>
         <div class="git">
             <a href="https://github.com/7uSsieN58/SARlock.git" target="_blank">
                     <i class="fa-brands fa-github"></i>
@@ -30,17 +25,18 @@
             <model-viewer
                 id="earth"
                 class="viewer"
-                src="models/earth.glb"
+                src="models/earth-v1.glb"
                 alt="A 3D model of the Earth"
                 camera-controls
                 auto-rotate
-                touch-action="pan-y"
-                shadow-intensity="1">
+                touch-action="pan-y">
 
-                <button class="hotspot" slot="hotspot-cairo"
-                    data-position="0.449m 0.501m 0.740m"
-                    data-normal="0.449m 0.501m 0.740m"
-                    data-info="Cairo, Egypt">1</button>
+                <div class="hotspot" slot="hotspot-chokwe"
+                    data-position="-0.5522201760530916m -0.309041248500574m -0.7739195982394437m" 
+                    data-normal="-0.550137473012261m -0.2977314700604816m -0.780195316906804m"
+                    data-info="Chókwè District, Gaza Province, Mozambique">
+                <p class="label">Mozambique</p>
+                </div>
 
             </model-viewer>
         </div>
@@ -48,7 +44,6 @@
             <div class="char"><img id="narrator-img" src="assets/narrator/greeting_nobg.png" alt="Zack"></div>
             <div class="text">
                 <p id="narrator-text" style="white-space: pre-wrap;"></p>
-                <a href="map.html" id="start-btn" style="display: none;">Start Mission 🚀</a>
             </div>
         </div>
     </main>

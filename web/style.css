@@ -8,7 +8,7 @@
     color: #F9F6E3;
 }
 body {
-    background-image: url(assets/images/backg.jpg.jpeg);
+    background-image: url(assets/images/space4.jpg);
     background-repeat: no-repeat;
     background-attachment: local;
     background-size: cover;
@@ -23,6 +23,7 @@ nav{
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    position: relative;
 }
 nav .logo{
     border: 2px solid rgba(255, 255, 255, 0.296);
@@ -40,29 +41,6 @@ nav .logo{
         border-radius: 50%;
     }
 }
-.pages{
-    border: 2px solid rgba(255, 255, 255, 0.292);
-    border-radius: 35px;
-    background-color: black;
-    box-shadow: 1.5px 1.5px 2px rgba(255, 255, 255, 0.299);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 100px;
-    padding: 15px 30px;
-    
-}
-.pages a{
-    text-decoration: none;
-    color: rgba(255, 255, 255, 0.83);
-    font-size: 22px;
-}
-.pages .chosen{
-    background-color: rgba(255, 255, 255, 0.148);
-    border: none;
-    border-radius: 20px;
-    padding: 3px 15px;
-}
 .git{
     border: 2px solid rgba(255, 255, 255, 0.296);
     border-radius: 20px;
@@ -72,6 +50,8 @@ nav .logo{
     align-items: center;
     justify-content: center;
     padding: 5px;
+    position: absolute;
+    right: 50px;
     a{
         text-decoration: none;
         color: white;
@@ -109,11 +89,12 @@ nav .logo{
     border-radius: 20px;
     color: white;
     display: grid;
-    grid-template-columns: 25% 75%;
+    grid-template-columns: 20% 80%;
     gap: 20px;
 }
-.landing .ast .char img{
-    width: 100%;
+.landing .ast .char{
+    display: flex;
+    justify-content: center;
 }
 .landing .ast .text{
     display: flex;
@@ -151,12 +132,20 @@ nav .logo{
     background-attachment: local;
     background-size: cover;
 }
-#map-page nav{
-    margin-bottom: 30px;
+/* #map-page nav{
+    position: relative;
+    margin-bottom: 50px;
 }
+#map-page nav .logo, .git{
+    position: absolute;
+}
+#map-page nav .git{
+    right: 50px;
+} */
 #content-in-map-page{
-    display: grid;
-    grid-template-columns: 62.5% 32.5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     width: 90%;
     height: 78vh;
     gap: 5%;
@@ -174,17 +163,16 @@ nav .logo{
     -webkit-backdrop-filter: blur(10px);
     background-color: rgba(0, 0, 0, 0.4);
     color: #ffffff;
-    border: 5px solid rgba(128, 128, 128, 0.627);
-    padding: 20px;
+    border: 3px solid rgba(74, 137, 176, 0.774);
+    padding: 10px 20px;
     border-radius: 15px;
-    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 #content-in-map-page .map_side img{
-    position: absolute;
-    top: 20px;
-    left: 36%;
-    width: 130px;
-    height: 70px;
+    width: 70px;
+    height: 100px;
     animation-name: alien;
     animation-timing-function: linear;
     animation-duration: 1s;
@@ -194,7 +182,6 @@ nav .logo{
 #content-in-map-page .map_side .text{
     color: white;
     font-size: 23px;
-    margin-top: 90px;
 }
 @keyframes alien {
     from{
@@ -208,38 +195,121 @@ nav .logo{
 /* *********************   3D Earth   ********************** */
 /* ********************************************************* */
 #earth{
-    width: 500px;
-    height: 500px;
+    width: 550px;
+    height: 550px;
 }
-#content-in-map-page .leftside .locations{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    gap: 20px;
-    margin-top: 30px;
-}
-#content-in-map-page .leftside .locations > *{
-    border: 1px solid #000000;
-    border-radius: 15px;
-    padding: 5px 15px;
-    background-color: #444444;
-    color: rgba(255, 255, 255, 0.89);
+#content-in-map-page .leftside .hotspot{
+    animation-name: loc;
+    animation-timing-function: linear;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    background-color: #b61515;
     cursor: pointer;
-    transition: 0.3s ease;
-    font-size: 23px;
-    font-weight: 500;
-}
-#content-in-map-page .leftside .locations > *:hover{
-    transform: scale(1.1);
-    background-color: white;
-    color: rgb(31, 31, 31);
-}
-#content-in-map-page .leftside button{
-    color: black;
-    background-color: white;
-    width: 20px;
-    height: 20px;
-    border: none;
     border-radius: 50%;
+    transition: 0.3s ease;
+    width: 15px; 
+    height: 15px;
+    position: relative;
+}
+#content-in-map-page .leftside .hotspot:hover{
+    .label{
+        visibility: visible;
+    }
+}
+#content-in-map-page .leftside .hotspot .label{
+    background-color: #95c9de;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    visibility: hidden;
+}
+@keyframes loc {
+    from{
+        box-shadow: 0 0 20px #f69d9d;
+    }
+    to{
+        box-shadow: 0 0 0px #f69d9d;
+    }
 }
 
+/* ********************************************************* */
+/* ***********************   slides   ********************** */
+/* ********************************************************* */
+.story-section {
+  width: 100%;
+  padding: 50px 0;
+  overflow: hidden;
+}
+
+/* The visible area */
+.slider-viewport {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* The horizontal row */
+.slides-track {
+  display: flex;
+  gap: 2vw;
+  transition: transform 1s cubic-bezier(.22, 1, .36, 1);
+  will-change: transform;
+}
+
+/* Individual slides */
+.slide {
+  flex: 0 0 80%;
+  min-height: 450px;
+  backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(128, 128, 128, 0.511);
+  border: 3px solid #7595c686;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.slide h2 {
+  font-size: 36px;
+}
+
+.slide p {
+  color: #aab7c8;
+  font-size: 18px;
+}
+
+/* Navigation */
+.slider-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  margin-top: 30px;
+}
+
+button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #7595c6cc;
+  color: black;
+  font-weight: 500;
+  font-size: 19px;
+}
+
+button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+#slideCounter {
+    color: white;
+}
