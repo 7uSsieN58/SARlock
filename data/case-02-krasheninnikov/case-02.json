@@ -50,21 +50,21 @@
       "id": "s1",
       "name": "NASA / ISRO via ASF DAAC",
       "title": "NISAR L2 GCOV PROVISIONAL Data (Track 132, Frame 61 Descending, 2026-08-22 & 2026-10-09)",
-      "url": "https://search.asf.alaska.edu/",
+      "url": "https://search.asf.alaska.edu/#/",
       "accessed": "2026-11-13"
     },
     {
       "id": "s2",
       "name": "NASA Earthdata",
-      "title": "What is Synthetic Aperture Radar (SAR)?",
-      "url": "https://www.earthdata.nasa.gov/learn/backgrounders/what-is-sar",
+      "title": "Intro to Synthetic Aperture Radar (SAR)",
+      "url": "https://www.earthdata.nasa.gov/learn/earth-observation-data-basics/sar",
       "accessed": "2026-11-13"
     },
     {
       "id": "s3",
-      "name": "NASA Jet Propulsion Laboratory (JPL) / Earth Observatory",
-      "title": "NISAR Observations of Krasheninnikov Activity (Eruption Onset August 2, 2025; First NISAR Pass December 25, 2025)",
-      "url": "https://www.jpl.nasa.gov/missions/nisar/",
+      "name": "NASA Scientific Visualization Studio (SVS) / JPL",
+      "title": "US-India Satellite Captures Time-Lapse Video of Volcanic Eruption (Krasheninnikov, Dec 25, 2025 - Aug 17, 2026)",
+      "url": "https://svs.gsfc.nasa.gov/5675/",
       "accessed": "2026-11-13"
     }
   ],

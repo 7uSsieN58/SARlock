@@ -27,17 +27,22 @@
   "nasa_resources": [
     {
       "name": "ASF Data Search Vertex",
-      "url": "https://search.asf.alaska.edu/",
+      "url": "https://search.asf.alaska.edu/#/",
       "used_for": "Searching and locating NISAR L2 GCOV granules over Track 114 Frame 165 and Track 132 Frame 61"
     },
     {
-      "name": "NASA Earthdata Cloud (earthaccess)",
-      "url": "https://www.earthdata.nasa.gov/",
+      "name": "NISAR Data User Guide (ASF)",
+      "url": "https://nisar-docs.asf.alaska.edu/",
+      "used_for": "GCOV L2 product structure, covariance matrix terms (HHHH/HVHV), and PROVISIONAL data specifications"
+    },
+    {
+      "name": "ASF NISAR Cloud Streaming Docs (earthaccess)",
+      "url": "https://hyp3-docs.asf.alaska.edu/nisar-docs/earthaccess",
       "used_for": "Authenticated cloud streaming of HDF5 covariance subsets without full downloads"
     },
     {
-      "name": "What is Synthetic Aperture Radar (SAR)? (NASA Earthdata)",
-      "url": "https://www.earthdata.nasa.gov/learn/backgrounders/what-is-sar",
+      "name": "Intro to Synthetic Aperture Radar (SAR) (NASA Earthdata)",
+      "url": "https://www.earthdata.nasa.gov/learn/earth-observation-data-basics/sar",
       "used_for": "Physical interpretation of L-band dual-polarization (HH/HV) backscatter, specular reflection, and surface roughness"
     }
   ]

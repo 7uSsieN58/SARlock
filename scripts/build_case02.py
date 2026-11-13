@@ -165,21 +165,21 @@ case_data = {
             "id": "s1",
             "name": "NASA / ISRO via ASF DAAC",
             "title": "NISAR L2 GCOV PROVISIONAL Data (Track 132, Frame 61 Descending, 2026-08-22 & 2026-10-09)",
-            "url": "https://search.asf.alaska.edu/",
+            "url": "https://search.asf.alaska.edu/#/",
             "accessed": "2026-11-13"
         },
         {
             "id": "s2",
             "name": "NASA Earthdata",
-            "title": "What is Synthetic Aperture Radar (SAR)?",
-            "url": "https://www.earthdata.nasa.gov/learn/backgrounders/what-is-sar",
+            "title": "Intro to Synthetic Aperture Radar (SAR)",
+            "url": "https://www.earthdata.nasa.gov/learn/earth-observation-data-basics/sar",
             "accessed": "2026-11-13"
         },
         {
             "id": "s3",
-            "name": "NASA Jet Propulsion Laboratory (JPL) / Earth Observatory",
-            "title": "NISAR Observations of Krasheninnikov Activity (Eruption Onset August 2, 2025; First NISAR Pass December 25, 2025)",
-            "url": "https://www.jpl.nasa.gov/missions/nisar/",
+            "name": "NASA Scientific Visualization Studio (SVS) / JPL",
+            "title": "US-India Satellite Captures Time-Lapse Video of Volcanic Eruption (Krasheninnikov, Dec 25, 2025 - Aug 17, 2026)",
+            "url": "https://svs.gsfc.nasa.gov/5675/",
             "accessed": "2026-11-13"
         }
     ],
@@ -414,17 +414,22 @@ index_data = {
     "nasa_resources": [
         {
             "name": "ASF Data Search Vertex",
-            "url": "https://search.asf.alaska.edu/",
+            "url": "https://search.asf.alaska.edu/#/",
             "used_for": "Searching and locating NISAR L2 GCOV granules over Track 114 Frame 165 and Track 132 Frame 61"
         },
         {
-            "name": "NASA Earthdata Cloud (earthaccess)",
-            "url": "https://www.earthdata.nasa.gov/",
+            "name": "NISAR Data User Guide (ASF)",
+            "url": "https://nisar-docs.asf.alaska.edu/",
+            "used_for": "GCOV L2 product structure, covariance matrix terms (HHHH/HVHV), and PROVISIONAL data specifications"
+        },
+        {
+            "name": "ASF NISAR Cloud Streaming Docs (earthaccess)",
+            "url": "https://hyp3-docs.asf.alaska.edu/nisar-docs/earthaccess",
             "used_for": "Authenticated cloud streaming of HDF5 covariance subsets without full downloads"
         },
         {
-            "name": "What is Synthetic Aperture Radar (SAR)? (NASA Earthdata)",
-            "url": "https://www.earthdata.nasa.gov/learn/backgrounders/what-is-sar",
+            "name": "Intro to Synthetic Aperture Radar (SAR) (NASA Earthdata)",
+            "url": "https://www.earthdata.nasa.gov/learn/earth-observation-data-basics/sar",
             "used_for": "Physical interpretation of L-band dual-polarization (HH/HV) backscatter, specular reflection, and surface roughness"
         }
     ]
