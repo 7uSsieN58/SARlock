@@ -109,3 +109,35 @@ document.addEventListener("DOMContentLoaded", () => {
   // Start after 1.5 seconds
   setTimeout(playNextMapLine, 1500);
 });
+
+
+// Case list for the Earth Explorer.
+// Shows title and location only. event_type and short_description are left out
+// on purpose, because they would reveal the event before the story does.
+async function loadCaseList() {
+  const list = document.getElementById("case-list");
+  if (!list) return;
+  try {
+    const response = await fetch("../data/index.json", { cache: "no-cache" });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const index = await response.json();
+    const cases = Array.isArray(index.cases) ? index.cases : [];
+    list.innerHTML = "";
+    cases.forEach((c) => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = `story.html?case=${encodeURIComponent(c.id)}`;
+      a.className = "case-link";
+      a.textContent = c.title || c.id;
+      const place = document.createElement("span");
+      place.className = "case-place";
+      place.textContent = c.location_label || "";
+      li.append(a, place);
+      list.appendChild(li);
+    });
+  } catch (err) {
+    console.warn("Could not load case list:", err);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadCaseList);

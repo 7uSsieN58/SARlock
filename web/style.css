@@ -313,3 +313,28 @@ button:disabled {
 #slideCounter {
     color: white;
 }
+/* ---------- Earth Explorer case list ---------- */
+.case-list {
+  list-style: none;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.case-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(74, 137, 176, 0.5);
+}
+.case-link {
+  color: #95c9de;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.case-link:hover { text-decoration: underline; }
+.case-place { color: #aab7c8; font-size: 14px; }

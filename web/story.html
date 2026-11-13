@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SARlock — Case Story</title>
+    <link rel="icon" type="image/png" href="assets/images/logo_nobg_circular.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="story.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script type="module" src="story/story.js"></script>
+</head>
+<body id="story-page" class="story-body">
+    <nav>
+        <a class="logo" href="index.html" aria-label="SARlock home">
+            <img src="assets/images/logo_nobg_circular.png" alt="">
+        </a>
+        <div class="git">
+            <a href="https://github.com/7uSsieN58/SARlock.git" target="_blank" rel="noopener" aria-label="GitHub repository">
+                <i class="fa-brands fa-github"></i>
+            </a>
+        </div>
+    </nav>
+
+    <main id="story-root" class="story-root" aria-live="polite">
+        <div id="story-loading" class="story-state">
+            <p>Loading the case...</p>
+        </div>
+        <div id="story-error" class="story-state story-error" hidden>
+            <p id="story-error-text"></p>
+            <a class="story-btn" href="map.html">Back to Earth Explorer</a>
+        </div>
+    </main>
+
+    <!-- Stage navigation (dots only, no progress bar) -->
+    <nav id="stage-nav" class="stage-nav" aria-label="Story stages" hidden></nav>
+
+    <!-- Sar: the guide. Placed by story-sar.js, never blocks the stage controls -->
+    <aside id="sar" class="sar" data-state="idle" aria-label="Sar, your guide">
+        <img id="sar-img" src="assets/narrator/greeting_nobg.png" alt="Sar">
+        <div id="sar-bubble" class="sar-bubble" role="status">
+            <p id="sar-text"></p>
+            <button type="button" id="sar-next" class="sar-next" hidden>Continue</button>
+        </div>
+    </aside>
+</body>
+</html>
