@@ -1,0 +1,33 @@
+{
+  "schema_version": "5-experiences-v1",
+  "cases": [
+    {
+      "id": "case-01",
+      "title": "Limpopo River Valley, Mozambique",
+      "location_label": "Chókwè District, Gaza Province, Mozambique",
+      "short_description": "A wide dark corridor appeared along this irrigated river valley within 12 days. Inspect NISAR's L-band radar passes to uncover what happened.",
+      "event_type": "flood",
+      "lat": -24.53,
+      "lng": 32.98,
+      "folder": "case-01-chokwe",
+      "json_file": "case-01-chokwe/case-01.json"
+    }
+  ],
+  "nasa_resources": [
+    {
+      "name": "ASF Data Search Vertex",
+      "url": "https://search.asf.alaska.edu/",
+      "used_for": "Searching and locating NISAR L2 GCOV granules over Track 114 Frame 165"
+    },
+    {
+      "name": "NASA Earthdata Cloud (earthaccess)",
+      "url": "https://www.earthdata.nasa.gov/",
+      "used_for": "Authenticated cloud streaming of HDF5 covariance subsets without full downloads"
+    },
+    {
+      "name": "What is Synthetic Aperture Radar (SAR)? (NASA Earthdata)",
+      "url": "https://www.earthdata.nasa.gov/learn/backgrounders/what-is-sar",
+      "used_for": "Physical interpretation of L-band dual-polarization (HH/HV) backscatter and specular reflection"
+    }
+  ]
+}
