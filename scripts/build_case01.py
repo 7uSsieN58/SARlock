@@ -79,7 +79,7 @@ case_data = {
     "data_level": "gcov",
     "channels": ["HH", "HV"],
     "processing": {
-        "product": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "product": "NISAR_L2_GCOV_BETA_V1",
         "mode_code": "DHDH",
         "frequency": "frequencyA",
         "channels": ["HH", "HV"],
@@ -96,7 +96,7 @@ case_data = {
         {
             "id": "s1",
             "name": "NASA / ISRO via ASF DAAC",
-            "title": "NISAR L2 GCOV Provisional Data (Track 114, Frame 165, 2026-01-05 & 2026-01-17)",
+            "title": "NISAR L2 GCOV BETA Data (Track 114, Frame 165, 2026-01-05 & 2026-01-17)",
             "url": "https://search.asf.alaska.edu/",
             "accessed": "2026-11-13"
         },
@@ -119,7 +119,7 @@ case_data = {
             "context": "The Ch\u00f3kw\u00e8 region sits along the lower Limpopo River in southern Mozambique, characterized by a winding main channel, oxbow bends, and a large irrigated agricultural scheme with rectangular field blocks. On its scheduled 12-day repeat orbit, NISAR's L-band radar imaged the ground regardless of cloud cover to capture the surface before and after a dramatic shift.",
             "facts": [
                 { "label": "Radar Sensor", "value": "NISAR L-band SAR (dual-polarization HH/HV)", "source_id": "s1" },
-                { "label": "Scene Footprint", "value": "30 km \u00d7 30 km (displayed at 500 \u00d7 500 px, 60 m posting)", "source_id": "s1" },
+                { "label": "Analysis Window", "value": "30 km \u00d7 30 km (displayed at 500 \u00d7 500 px, 60 m posting)", "source_id": "s1" },
                 { "label": "Acquisition Window", "value": "12-day repeat pass (2026-01-05 to 2026-01-17)", "source_id": "s1" }
             ],
             "sar": {
@@ -223,8 +223,8 @@ case_data = {
                 "event_label": "Flood",
                 "summary": "Overflow and inundation along the Limpopo River covered surrounding agricultural fields around Ch\u00f3kw\u00e8 between January 5 and January 17, 2026. Standing water replaced rough soil and low crops with a smooth surface that reflected NISAR's L-band radar pulses away from the sensor, producing the wide dark swath on January 17 and the bright red corridor in the change map.",
                 "metrics": [
-                    { "label": "Scene-Wide Mean HH (dB)", "value": "Shifted from -11.98 dB to -10.90 dB (mean of dB pixels across 30 km window; see caveat on surrounding soil moisture)", "source_id": "s1" },
-                    { "label": "Scene-Wide Mean HV (dB)", "value": "Shifted from -18.83 dB to -18.40 dB (mean of dB pixels across 30 km window)", "source_id": "s1" },
+                    { "label": "Window Mean HH (dB)", "value": "Shifted from -11.98 dB to -10.90 dB (mean of dB pixels across 30 km window; see caveat on surrounding soil moisture)", "source_id": "s1" },
+                    { "label": "Window Mean HV (dB)", "value": "Shifted from -18.83 dB to -18.40 dB (mean of dB pixels across 30 km window)", "source_id": "s1" },
                     { "label": "Display Stretch (2%\u201398%)", "value": "-19.47 to -4.16 dB (HH) and -25.03 to -11.62 dB (HV)", "source_id": "s1" }
                 ]
             },
@@ -242,9 +242,9 @@ case_data = {
                     "source_id": "s1",
                     "scope": "this event only"
                 },
-                "polarization_note": "We report the observed brightness changes in both HH and HV for this specific Provisional GCOV image pair without generalizing them into a universal classification rule, and we do not convert brightness differences directly into floodwater area."
+                "polarization_note": "We report the observed brightness changes in both HH and HV for this specific BETA GCOV image pair without generalizing them into a universal classification rule, and we do not convert brightness differences directly into floodwater area."
             },
-            "limitations": "This analysis uses PROVISIONAL (Beta) NISAR L2 GCOV data where absolute radiometric calibration is still maturing. Broad cyan brightening outside the river valley (which raised the scene-wide mean HH by +1.08 dB despite local darkening in flooded fields) likely reflects increased soil moisture across surrounding terrain or provisional calibration differences and cannot be separated without ground validation.",
+            "limitations": "This analysis uses BETA (pre-calibration) NISAR L2 GCOV data, which is not yet fully calibrated and can show radiometric artifacts such as banding across the swath. Broad cyan brightening outside the river valley (which raised the window mean HH by +1.08 dB despite local darkening in flooded fields) likely reflects increased soil moisture across surrounding terrain or calibration differences between the two BETA files and cannot be separated without ground validation.",
             "sar": {
                 "pose": "explaining",
                 "dialogue": "Here is the science behind what you saw: calm standing water acts like a mirror to L-band microwaves, bouncing the signal away from my antenna so flooded fields turn dark."
@@ -259,7 +259,7 @@ case_data = {
                 "choices": [
                     {
                         "text": "Publish the red pixels directly as an exact street-by-street structural damage map.",
-                        "feedback": "Careful: radar brightness change shows where surface scattering shifted, not structural damage or exact water depth, and provisional data requires ground confirmation.",
+                        "feedback": "Careful: radar brightness change shows where surface scattering shifted, not structural damage or exact water depth, and pre-calibration BETA data requires ground confirmation.",
                         "best_choice": False
                     },
                     {
@@ -282,7 +282,7 @@ case_data = {
                     "Averaging linear power over 6\u00d76 blocks before dB conversion reduces speckle noise while preserving exact grid alignment.",
                     "Brightness change maps highlight where surface scattering changed dramatically, but require local validation before estimating exact flood extent or damage."
                 ],
-                "looking_forward": "As NISAR transitions from provisional to calibrated science operations with regular 12-day global coverage, consistent dual-polarization L-band time series will help hydrologists and disaster agencies monitor major river basins more reliably."
+                "looking_forward": "As NISAR products become fully calibrated and validated, and with regular 12-day global coverage, consistent dual-polarization L-band time series will help hydrologists and disaster agencies monitor major river basins more reliably."
             },
             "sar": {
                 "pose": "proud",
@@ -291,7 +291,7 @@ case_data = {
         }
     ],
     "credit": "NISAR (NASA/ISRO), distributed by ASF DAAC",
-    "caveat": "Processed from PROVISIONAL (Beta) NISAR L2 GCOV data; change maps compare relative backscatter brightness (dB) and do not directly measure flood extent, water depth, or structural damage."
+    "caveat": "Processed from BETA (pre-calibration) NISAR L2 GCOV data, which is not yet fully calibrated; ASF documents radiometric artifacts in these products. Change maps compare relative backscatter brightness (dB) between two dates and do not directly measure flood extent, water depth, or structural damage."
 }
 
 with open(case_dir / "case-01.json", "w", encoding="utf-8") as f:
