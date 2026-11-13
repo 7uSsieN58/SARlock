@@ -1,12 +1,16 @@
 {
+  "schema_version": "5-experiences-v1",
   "cases": [
     {
       "id": "case-01",
       "title": "Limpopo River Valley, Mozambique",
+      "location_label": "Chókwè District, Gaza Province, Mozambique",
+      "short_description": "A wide dark corridor appeared along this irrigated river valley within 12 days. Inspect NISAR's L-band radar passes to uncover what happened.",
       "event_type": "flood",
       "lat": -24.53,
       "lng": 32.98,
-      "folder": "case-01-chokwe"
+      "folder": "case-01-chokwe",
+      "json_file": "case-01-chokwe/case-01.json"
     }
   ],
   "nasa_resources": [

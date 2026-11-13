@@ -3,29 +3,29 @@
 case_dir = "data/case-01-chokwe"
 os.makedirs(case_dir, exist_ok=True)
 
-# 1. Ensure all 6 verified GCOV images are in place
-file_map = {
-    "out_test/before_HH.png": f"{case_dir}/before_HH.png",
-    "out_test/before_HV.png": f"{case_dir}/before_HV.png",
-    "out_test/event_HH.png":  f"{case_dir}/after_HH.png",
-    "out_test/event_HV.png":  f"{case_dir}/after_HV.png",
-    "out_test/change_HH.png": f"{case_dir}/change_HH.png",
-    "out_test/change_HV.png": f"{case_dir}/change_HV.png",
-}
-for src, dst in file_map.items():
-    if os.path.exists(src):
-        shutil.copy2(src, dst)
+# 1. Verify all 6 GCOV images exist
+required_images = [
+    "before_HH.png", "before_HV.png",
+    "after_HH.png",  "after_HV.png",
+    "change_HH.png", "change_HV.png"
+]
+for img in required_images:
+    assert os.path.exists(f"{case_dir}/{img}"), f"Missing image: {case_dir}/{img}"
 
-# 2. Write data/index.json (listing ONLY resources actually used)
+# 2. Update data/index.json (supports 3D Globe markers & spoiler-free hover preview)
 index_data = {
+    "schema_version": "5-experiences-v1",
     "cases": [
         {
             "id": "case-01",
             "title": "Limpopo River Valley, Mozambique",
+            "location_label": "Chókwè District, Gaza Province, Mozambique",
+            "short_description": "A wide dark corridor appeared along this irrigated river valley within 12 days. Inspect NISAR's L-band radar passes to uncover what happened.",
             "event_type": "flood",
             "lat": -24.53,
             "lng": 32.98,
-            "folder": "case-01-chokwe"
+            "folder": "case-01-chokwe",
+            "json_file": "case-01-chokwe/case-01.json"
         }
     ],
     "nasa_resources": [
@@ -47,20 +47,25 @@ index_data = {
 with open("data/index.json", "w", encoding="utf-8") as f:
     json.dump(index_data, f, indent=2, ensure_ascii=False)
 
-# 3. Write data/case-01-chokwe/case-01.json (100% anchored to verified granule timestamps)
+# 3. Update data/case-01-chokwe/case-01.json (5-Experience Interactive Narrative)
 before_granule = "NISAR_L2_PR_GCOV_009_114_A_165_4005_DHDH_A_20260105T034232_20260105T034253_X05010_N_P_J_001"
 after_granule  = "NISAR_L2_PR_GCOV_010_114_A_165_4005_DHDH_A_20260117T034232_20260117T034254_X05010_N_P_J_001"
 
 case_data = {
     "id": "case-01",
     "title": "Limpopo River Valley, Mozambique",
+    "subtitle": "A 12-Day Surface Transformation Along an Irrigated Corridor",
     "event_type": "flood",
     "location": {
         "name": "Chókwè District, Gaza Province, Mozambique",
         "lat": -24.53,
         "lng": 32.98
     },
-    "event_date": "2026-01-17",
+    "observation_period": {
+        "before_date": "2026-01-05",
+        "after_date": "2026-01-17",
+        "repeat_days": 12
+    },
     "bbox": {
         "west": 32.8317,
         "south": -24.6654,
@@ -68,6 +73,7 @@ case_data = {
         "north": -24.3945
     },
     "data_level": "gcov",
+    "channels": ["HH", "HV"],
     "processing": {
         "product": "NISAR_L2_GCOV_PROVISIONAL_V1",
         "mode_code": "DHDH",
@@ -98,146 +104,176 @@ case_data = {
             "accessed": "2026-11-13"
         }
     ],
-    "slides": [
+    "experiences": [
         {
-            "type": "hook",
-            "question": "Between January 5 and January 17, 2026, a broad dark corridor appeared along this river valley and across nearby rectangular fields. What caused such a sudden shift in radar brightness?",
-            "sar_line": "Look closely at the river bends and the geometric grid to the southeast—something dramatic altered the surface in just twelve days.",
-            "sar_pose": "thinking"
-        },
-        {
-            "type": "details",
+            "step": 1,
+            "stage": "encounter",
+            "title": "The Encounter",
             "date_label": "January 5 – January 17, 2026",
             "place_label": "Chókwè Agricultural Corridor, Gaza Province, Mozambique",
-            "context": "The Chókwè region sits along the lower Limpopo River in southern Mozambique, characterized by a winding main channel, oxbow lakes, and a large irrigated agricultural scheme with rectangular field blocks.",
+            "hook_question": "Between January 5 and January 17, 2026, a broad dark corridor appeared along this river valley and across nearby rectangular fields. What caused such a sudden shift in radar brightness?",
+            "context": "The Chókwè region sits along the lower Limpopo River in southern Mozambique, characterized by a winding main channel, oxbow lakes, and a large irrigated agricultural scheme with rectangular field blocks. On its scheduled 12-day repeat orbit, NISAR's L-band radar penetrated cloud cover to capture the ground before and after a dramatic surface shift.",
             "facts": [
                 { "label": "Radar Sensor", "value": "NISAR L-band SAR (dual-polarization HH/HV)", "source_id": "s1" },
                 { "label": "Scene Window", "value": "30 km × 30 km (3,000 × 3,000 pixels at 10 m spacing)", "source_id": "s1" },
                 { "label": "Acquisition Window", "value": "12-day repeat pass (2026-01-05 to 2026-01-17)", "source_id": "s1" }
             ],
-            "sar_line": "This is one of southern Mozambique's key farming regions, mapped here at 10-meter pixel spacing.",
-            "sar_pose": "greeting"
+            "sar": {
+                "pose": "greeting",
+                "dialogue": "Hello! Welcome to the lower Limpopo River valley in southern Mozambique. Something dramatic altered this landscape in just twelve days—and my L-band radar caught every detail right through the clouds."
+            }
         },
         {
-            "type": "before",
-            "images": [
-                { "channel": "HH", "file": "before_HH.png" },
-                { "channel": "HV", "file": "before_HV.png" }
-            ],
-            "date": "2026-01-05",
-            "granule_id": before_granule,
-            "caption": "NISAR L-band backscatter (HH and HV) on January 5, 2026, showing baseline surface conditions.",
-            "context": "The winding Limpopo River channel appears as a narrow dark ribbon, while surrounding fields and settlements return moderate gray backscatter in both HH and HV channels.",
-            "sar_line": "Here is the baseline pass on January 5. Notice how clearly the narrow river channel stands out against the surrounding land.",
-            "sar_pose": "explaining"
-        },
-        {
-            "type": "event",
-            "date": "2026-01-17",
-            "granule_id": after_granule,
-            "days_from_event": 0,
-            "caption": "NISAR returned on its scheduled 12-day repeat orbit on January 17, 2026 (Track 114, Frame 165).",
-            "context": "Between the January 5 baseline pass and the January 17 acquisition, major surface changes occurred across the Limpopo River corridor. Because L-band radar penetrates cloud cover, the January 17 pass captured the ground state directly.",
-            "sar_line": "Optical cameras struggle when thick clouds cover a region, but L-band radar penetrates right through on its scheduled orbital pass.",
-            "sar_pose": "thinking"
-        },
-        {
-            "type": "after",
-            "images": [
-                { "channel": "HH", "file": "after_HH.png" },
-                { "channel": "HV", "file": "after_HV.png" }
-            ],
-            "date": "2026-01-17",
-            "granule_id": after_granule,
-            "caption": "NISAR L-band backscatter (HH and HV) on January 17, 2026, showing a wide dark zone along the river and inside rectangular field plots.",
-            "context": "Compared to January 5, a wide band flanking the Limpopo River and several rectangular agricultural blocks in the southeast dropped sharply in backscatter, appearing dark in both HH and HV.",
-            "sar_line": "Twelve days later, a wide dark swath flanks the river and fills those geometric fields in the bottom right.",
-            "sar_pose": "amazed"
-        },
-        {
-            "type": "investigation",
-            "images": [
-                { "channel": "HH", "file": "change_HH.png" },
-                { "channel": "HV", "file": "change_HV.png" }
-            ],
-            "legend": "Red: brighter in the BEFORE image. Cyan: brighter in the AFTER image. Gray/white: little change. Black: no data. This compares image brightness (backscatter), not measured flood extent or water depth.",
-            "context": "Toggle between HH and HV to inspect the bright red corridor along the river channel and inside the southeastern rectangular plots, contrasted with permanent dark water bodies in the southwest.",
-            "prediction": {
-                "prompt": "Based on the sharp drop in radar brightness along the river channel and across low-lying agricultural plots, what caused this change?",
-                "options": [
-                    "Flood",
-                    "Earthquake",
-                    "Wildfire",
-                    "Volcanic eruption"
-                ],
-                "correct_index": 0,
-                "hints": [
-                    "The strongest red signal closely follows the winding Limpopo River valley and flat irrigation blocks.",
-                    "Calm open water acts like a mirror to radar pulses, reflecting energy away from the satellite and making the surface look dark."
-                ]
+            "step": 2,
+            "stage": "discovery",
+            "title": "The Discovery",
+            "instruction": "Drag the Before / After slider to compare January 5 and January 17, switch between HH and HV polarizations, and inspect the brightness change map.",
+            "slider_comparison": {
+                "before": {
+                    "date": "2026-01-05",
+                    "granule_id": before_granule,
+                    "caption": "Baseline surface conditions on January 5, 2026. The winding river channel appears as a narrow dark ribbon, while surrounding fields and settlements return moderate gray backscatter.",
+                    "images": {
+                        "HH": "before_HH.png",
+                        "HV": "before_HV.png"
+                    }
+                },
+                "after": {
+                    "date": "2026-01-17",
+                    "granule_id": after_granule,
+                    "caption": "Post-event observation on January 17, 2026. A wide dark swath flanks the river channel and fills geometric agricultural blocks in the southeast.",
+                    "images": {
+                        "HH": "after_HH.png",
+                        "HV": "after_HV.png"
+                    }
+                }
             },
+            "change_map": {
+                "images": {
+                    "HH": "change_HH.png",
+                    "HV": "change_HV.png"
+                },
+                "legend": "Red: brighter in the BEFORE image (sharp drop in radar brightness). Cyan: brighter in the AFTER image. Gray/white: little change. Black: no data.",
+                "note": "Compares relative radar backscatter brightness (dB), not direct water depth or physical extent."
+            },
+            "hotspots": [
+                {
+                    "id": "hs-1",
+                    "label": "Winding River Corridor",
+                    "description": "A broad dark band flanks the main channel on January 17, appearing bright red in both HH and HV change maps."
+                },
+                {
+                    "id": "hs-2",
+                    "label": "Southeastern Rectangular Plots",
+                    "description": "Geometric irrigated farm blocks shifted sharply from moderate gray to dark in both polarizations."
+                },
+                {
+                    "id": "hs-3",
+                    "label": "Southwestern Permanent Water",
+                    "description": "Existing lakes remain dark in both passes, showing near-zero change (gray/black) in the difference map."
+                }
+            ],
+            "sar": {
+                "pose": "amazed",
+                "dialogue": "Slide between January 5 and January 17! Notice how a wide dark corridor suddenly appears along the river bends and fills those rectangular farm plots to the southeast."
+            }
+        },
+        {
+            "step": 3,
+            "stage": "challenge",
+            "title": "The Challenge",
+            "question": "Based on the sharp drop in radar brightness along the river channel and across low-lying agricultural plots, what caused this surface change?",
+            "options": [
+                "Flood",
+                "Earthquake",
+                "Wildfire",
+                "Volcanic eruption"
+            ],
+            "correct_index": 0,
+            "hints": [
+                "Look at the geometry of the bright red zone in the change map: it closely hugs the winding Limpopo River valley and flat irrigation blocks.",
+                "Calm open water acts like a mirror to radar pulses, reflecting microwave energy away from the satellite so the surface looks dark."
+            ],
+            "responses": {
+                "correct": "Spot on! Standing floodwater replaced rough soil and crops with a smooth surface that reflected NISAR's radar pulses away from the antenna, creating that sharp brightness drop (shown in red).",
+                "wrong": "Interesting hypothesis! Look closely at the geometry of the red zone: it hugs the winding Limpopo River and fills flat rectangular farm plots—a classic signature of standing floodwater creating a smooth, mirror-like surface."
+            },
+            "sar": {
+                "pose": "curious",
+                "dialogue": "Now that you have inspected the before-and-after radar imagery, what event do you think reshaped this river valley?"
+            }
+        },
+        {
+            "step": 4,
+            "stage": "explanation",
+            "title": "The Explanation",
             "reveal": {
                 "event_label": "Flood",
-                "summary": "Overflow along the Limpopo River inundated surrounding agricultural fields around Chókwè between January 5 and January 17, 2026. Standing water replaced rough soil and crops with a smooth surface that reflected NISAR's L-band radar pulses away from the sensor, creating the distinct dark swath in the January 17 image and the bright red corridor in the change map.",
-                "facts": [
+                "summary": "Overflow along the Limpopo River inundated surrounding agricultural fields around Chókwè between January 5 and January 17, 2026. Standing water replaced rough soil and crops with a smooth surface that reflected NISAR's L-band radar pulses away from the sensor, producing the wide dark swath on January 17 and the bright red corridor in the change map.",
+                "metrics": [
                     { "label": "Mean HH Backscatter", "value": "Shifted from -11.98 dB (2026-01-05) to -10.90 dB (2026-01-17) across the 30 km window", "source_id": "s1" },
                     { "label": "Mean HV Backscatter", "value": "Shifted from -18.83 dB (2026-01-05) to -18.40 dB (2026-01-17) across the 30 km window", "source_id": "s1" },
                     { "label": "Display Stretch (2%–98%)", "value": "-19.47 to -4.16 dB (HH) and -25.03 to -11.62 dB (HV)", "source_id": "s1" }
-                ],
-                "feedback_correct": "Spot on! Smooth standing water causes specular reflection away from the radar antenna, producing a sharp brightness drop (shown in red) right along the river valley and irrigated plots.",
-                "feedback_wrong": "Look at the geometry of the red zone: it hugs the winding Limpopo River and fills flat rectangular farm plots—a classic signature of floodwater creating a smooth, mirror-like surface."
+                ]
             },
-            "sar_line": "You cracked the case! That red band traces where standing floodwater turned rough ground into a radar mirror.",
-            "sar_pose": "celebrating"
+            "what_radar_sees": "Radar transmits microwave pulses and measures the energy scattered back to the satellite. Dry soil and crops scatter energy in many directions (moderate gray brightness), whereas calm floodwater acts like a smooth mirror (specular reflection), bouncing the radar beam away so inundated areas appear very dark.",
+            "how_nisar_detected_it": {
+                "mode_code": "DHDH",
+                "channels": ["HH", "HV"],
+                "polarization_expected": {
+                    "text": "In SAR literature, co-polarized HH typically provides strong contrast between rough land and smooth open water, while cross-polarized HV is primarily sensitive to volume scattering from vegetation canopies and drops when low crops are submerged.",
+                    "source_id": "s2"
+                },
+                "polarization_observed": {
+                    "text": "In our Chókwè GCOV pair, both HH and HV dropped sharply along the Limpopo River corridor and inside the southeastern rectangular agricultural plots (appearing bright red in both change maps), while permanent water bodies in the southwest remained dark in both passes.",
+                    "scope": "this event only"
+                },
+                "polarization_note": "We report the observed brightness changes in both HH and HV for this specific Provisional GCOV image pair without generalizing them into a universal classification rule, and we do not convert brightness differences directly into floodwater area."
+            },
+            "limitations": "This analysis uses PROVISIONAL (Beta) NISAR L2 GCOV data where absolute radiometric calibration is still maturing. Broad cyan brightening outside the river valley (raising scene-wide mean HH by ~1.08 dB) may reflect increased soil moisture after rainfall or provisional calibration differences and cannot be separated without ground validation.",
+            "sar": {
+                "pose": "explaining",
+                "dialogue": "Here is the science behind what you saw: calm standing water acts like a mirror to L-band microwaves, bouncing the signal away from my antenna so flooded fields turn dark."
+            }
         },
         {
-            "type": "explanation",
-            "mode_code": "DHDH",
-            "channels": ["HH", "HV"],
-            "what_radar_sees": "Radar transmits microwave pulses and measures the energy scattered back. Dry soil and crops scatter energy in many directions (moderate gray brightness), whereas calm floodwater acts like a smooth mirror (specular reflection), bouncing the radar beam away from the satellite so inundated areas appear very dark.",
-            "polarization_expected": {
-                "text": "In SAR literature, co-polarized HH typically provides strong contrast between rough land and smooth open water, while cross-polarized HV is primarily sensitive to volume scattering from vegetation canopies and drops when low crops are submerged.",
-                "source_id": "s2"
-            },
-            "polarization_observed": {
-                "text": "In our Chókwè GCOV pair, both HH and HV dropped sharply along the Limpopo River corridor and inside the southeastern rectangular agricultural plots (appearing bright red in both change maps), while permanent water bodies in the southwest remained dark in both passes.",
-                "scope": "this event only"
-            },
-            "polarization_note": "We report the observed brightness changes in both HH and HV for this specific Provisional GCOV image pair without generalizing them into a universal classification rule, and we do not convert brightness differences directly into floodwater area.",
-            "limits": "This analysis uses PROVISIONAL (Beta) NISAR L2 GCOV data where absolute radiometric calibration is still maturing. In addition, broad cyan brightening outside the river valley (raising scene-wide mean HH by ~1.08 dB) may reflect increased soil moisture after rainfall or provisional calibration differences and cannot be separated without ground validation.",
-            "sar_line": "Comparing HH and HV side by side confirms the river and farm plots darkened in both channels, while reminding us to treat provisional calibration carefully.",
-            "sar_pose": "explaining"
-        },
-        {
-            "type": "lessons",
-            "lessons": [
-                "L-band radar penetrates storm clouds day and night, revealing river overflow when optical satellites are blocked.",
-                "Averaging linear power over 6x6 blocks before dB conversion reduces radar speckle noise while keeping identical grid alignment.",
-                "Brightness change maps highlight where surface scattering changed dramatically, but require local validation before estimating exact flood extent or damage."
-            ],
-            "looking_forward": "As NISAR transitions from provisional to calibrated science operations with regular 12-day global coverage, consistent dual-polarization L-band time series will help hydrologists and disaster agencies monitor major river basins more reliably.",
-            "decision": {
+            "step": 5,
+            "stage": "impact",
+            "title": "The Impact",
+            "take_action": {
                 "scenario": "You are supporting emergency coordination in Gaza Province on January 17, 2026, with this NISAR brightness change map in hand. What is your next step?",
                 "choices": [
                     {
-                        "text": "Prioritize aerial/field reconnaissance along the red river corridor and southeastern Chókwè farm plots while cross-checking road elevation data.",
-                        "feedback": "Smart approach: using the radar change map to target reconnaissance—rather than treating it as a standalone damage map—focuses teams quickly on the most likely inundated zones.",
+                        "text": "Prioritize aerial and field reconnaissance along the red river corridor and southeastern Chókwè farm plots while cross-checking road elevation data.",
+                        "feedback": "Smart decision! Using the radar change map to target reconnaissance—rather than treating it as a standalone damage map—helps response teams focus quickly on the most likely inundated zones.",
                         "best_choice": True
                     },
                     {
                         "text": "Publish the red pixels directly as an exact street-by-street structural damage map.",
-                        "feedback": "Careful: radar brightness change shows where surface scattering shifted, not structural damage or exact water depth, and provisional data needs ground confirmation.",
+                        "feedback": "Careful: radar brightness change shows where surface scattering shifted, not structural damage or exact water depth, and provisional data requires ground confirmation.",
                         "best_choice": False
                     },
                     {
                         "text": "Wait several days for completely cloud-free optical satellite imagery before alerting local teams.",
-                        "feedback": "Waiting for clear skies costs critical response time during tropical storms when L-band radar already highlights major corridor changes.",
+                        "feedback": "Waiting for clear skies costs critical response time during storm systems when L-band radar already highlights major corridor changes.",
                         "best_choice": False
                     }
                 ]
             },
-            "sar_line": "Radar gives responders an early map of where to look first—even beneath storm clouds.",
-            "sar_pose": "greeting"
+            "summary": {
+                "what_happened": "River overflow inundated low-lying agricultural plots along the Limpopo River near Chókwè between January 5 and January 17, 2026.",
+                "what_nisar_observed": "A sharp drop in both HH and HV radar backscatter along the river valley and geometric farm blocks, captured through cloud cover on a 12-day repeat pass.",
+                "key_takeaways": [
+                    "L-band radar penetrates storm clouds day and night, revealing river overflow when optical satellites are blocked.",
+                    "Averaging linear power over 6x6 blocks before dB conversion reduces speckle noise while preserving exact grid alignment.",
+                    "Brightness change maps highlight where surface scattering changed dramatically, but require local validation before estimating exact flood extent or damage."
+                ],
+                "looking_forward": "As NISAR transitions from provisional to calibrated science operations with regular 12-day global coverage, consistent dual-polarization L-band time series will help hydrologists and disaster agencies monitor major river basins more reliably."
+            },
+            "sar": {
+                "pose": "proud",
+                "dialogue": "Case solved! Radar gives responders an early map of where to look first—even beneath storm clouds. Ready to explore another event on the globe?"
+            }
         }
     ],
     "credit": "NISAR (NASA/ISRO), distributed by ASF DAAC",
@@ -247,31 +283,32 @@ case_data = {
 with open(f"{case_dir}/case-01.json", "w", encoding="utf-8") as f:
     json.dump(case_data, f, indent=2, ensure_ascii=False)
 
-# 4. Run Contract v4 Section 9 Validation Checklist
+# 4. Automated Validation (5-Experience Schema + Anti-Spoiler Check)
 banned = ["flood", "earthquake", "wildfire", "fire", "volcano", "eruption", "subsidence", "glacier", "quake"]
 pre_reveal_text = json.dumps({
     "title": case_data["title"],
+    "subtitle": case_data["subtitle"],
     "location": case_data["location"]["name"],
-    "slides_1_to_5": case_data["slides"][:5]
+    "index_preview": index_data["cases"][0]["short_description"],
+    "stages_1_to_3": [
+        case_data["experiences"][0],
+        case_data["experiences"][1],
+        {
+            "question": case_data["experiences"][2]["question"],
+            "hints": case_data["experiences"][2]["hints"],
+            "sar": case_data["experiences"][2]["sar"]
+        }
+    ]
 }).lower()
 
 found_banned = [w for w in banned if w in pre_reveal_text]
-assert len(case_data["slides"]) == 8, "Must have 8 slides"
-assert [s["type"] for s in case_data["slides"]] == ["hook", "details", "before", "event", "after", "investigation", "explanation", "lessons"]
 assert not found_banned, f"SPOILER FOUND: {found_banned}"
-assert len(case_data["slides"][5]["prediction"]["options"]) == 4
+assert [e["stage"] for e in case_data["experiences"]] == ["encounter", "discovery", "challenge", "explanation", "impact"]
 source_ids = {s["id"] for s in case_data["sources"]}
-for s in case_data["slides"]:
-    for fact in s.get("facts", []):
-        assert fact["source_id"] in source_ids
-    if "reveal" in s:
-        for fact in s["reveal"].get("facts", []):
-            assert fact["source_id"] in source_ids
-    if "polarization_expected" in s:
-        assert s["polarization_expected"]["source_id"] in source_ids
+for fact in case_data["experiences"][0]["facts"]:
+    assert fact["source_id"] in source_ids
+for metric in case_data["experiences"][3]["reveal"]["metrics"]:
+    assert metric["source_id"] in source_ids
+assert case_data["experiences"][3]["how_nisar_detected_it"]["polarization_expected"]["source_id"] in source_ids
 
-for img_slide in [2, 4, 5]:
-    for img in case_data["slides"][img_slide]["images"]:
-        assert os.path.exists(f"{case_dir}/{img['file']}"), f"Missing {img['file']}"
-
-print("ALL CONTRACT v4 VALIDATION CHECKS PASSED!")
+print("ALL 5-EXPERIENCE JSON & ANTI-SPOILER CHECKS PASSED!")
