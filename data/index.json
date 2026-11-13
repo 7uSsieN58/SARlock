@@ -1,0 +1,26 @@
+{
+  "cases": [
+    {
+      "id": "case-01",
+      "title": "Limpopo River Valley, Mozambique",
+      "event_type": "flood",
+      "lat": -24.53,
+      "lng": 32.98,
+      "folder": "case-01-chokwe"
+    }
+  ],
+  "nasa_resources": [
+    {
+      "name": "ASF Data Search Vertex",
+      "used_for": "Searching and locating NISAR L2 GCOV granules over Track 114 Frame 165"
+    },
+    {
+      "name": "NASA Earthdata Cloud (earthaccess)",
+      "used_for": "Authenticated cloud streaming of HDF5 covariance subsets without full downloads"
+    },
+    {
+      "name": "Introduction to SAR (NASA Earthdata)",
+      "used_for": "Physical interpretation of L-band dual-polarization (HH/HV) backscatter and specular reflection"
+    }
+  ]
+}
