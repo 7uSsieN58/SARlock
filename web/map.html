@@ -9,10 +9,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <script src="map.js" defer></script>
 </head>
-<body>
+<body id="map-page">
     <nav>
         <div class="logo">
-            <img src="assets/images/logo.png" alt="">
+            <img src="assets/images/logo_nobg_circular.png" alt="">
         </div>
         <div class="pages">
             <a href="index.html">Home</a>
@@ -27,7 +27,22 @@
     </nav>
     <main class="container" id="content-in-map-page">
         <div class="leftside">
-            
+            <model-viewer
+                id="earth"
+                class="viewer"
+                src="models/earth.glb"
+                alt="A 3D model of the Earth"
+                camera-controls
+                auto-rotate
+                touch-action="pan-y"
+                shadow-intensity="1">
+
+                <button class="hotspot" slot="hotspot-cairo"
+                    data-position="0.449m 0.501m 0.740m"
+                    data-normal="0.449m 0.501m 0.740m"
+                    data-info="Cairo, Egypt">1</button>
+
+            </model-viewer>
         </div>
         <div class="map_side">
             <div class="char"><img id="narrator-img" src="assets/narrator/greeting_nobg.png" alt="Zack"></div>
@@ -37,5 +52,8 @@
             </div>
         </div>
     </main>
+
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.4.0/dist/model-viewer.min.js"></script>
 </body>
 </html>
