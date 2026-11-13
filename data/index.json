@@ -14,9 +14,9 @@
     },
     {
       "id": "case-02",
-      "title": "Krasheninnikov Caldera, Kamchatka",
-      "location_label": "Krasheninnikov Volcano, Kamchatka Peninsula, Russia",
-      "short_description": "A bright new finger extended inside this twin-coned caldera while nearby slopes darkened over 48 days. Inspect NISAR's L-band radar passes to uncover what happened.",
+      "title": "Eastern Kamchatka Highlands, Russia",
+      "location_label": "Eastern Kamchatka Peninsula, Russia",
+      "short_description": "A bright new finger extended inside this twin-peaked, ring-walled basin while nearby slopes darkened over 48 days. Inspect NISAR's L-band radar passes to uncover what happened.",
       "event_type": "volcano",
       "lat": 54.593,
       "lng": 160.273,
@@ -33,7 +33,7 @@
     {
       "name": "NISAR Data User Guide (ASF)",
       "url": "https://nisar-docs.asf.alaska.edu/",
-      "used_for": "GCOV L2 product structure, covariance matrix terms (HHHH/HVHV), and PROVISIONAL data specifications"
+      "used_for": "GCOV L2 product structure, RTC gamma-naught covariance terms (HHHH/HVHV), and PROVISIONAL data specifications"
     },
     {
       "name": "ASF NISAR Cloud Streaming Docs (earthaccess)",
@@ -44,6 +44,16 @@
       "name": "Intro to Synthetic Aperture Radar (SAR) (NASA Earthdata)",
       "url": "https://www.earthdata.nasa.gov/learn/earth-observation-data-basics/sar",
       "used_for": "Physical interpretation of L-band dual-polarization (HH/HV) backscatter, specular reflection, and surface roughness"
+    },
+    {
+      "name": "NASA Scientific Visualization Studio (SVS) — Krasheninnikov Time-Lapse",
+      "url": "https://svs.gsfc.nasa.gov/5675",
+      "used_for": "Official NASA/ISRO visualization and timeline of Krasheninnikov activity (Dec 25, 2025 to Aug 17, 2026)"
+    },
+    {
+      "name": "NASA / JPL — US-India Satellite Captures Time-lapse Video of Volcanic Eruption",
+      "url": "https://www.nasa.gov/missions/nisar/us-india-satellite-captures-time-lapse-video-of-volcanic-eruption/",
+      "used_for": "Official NASA mission article documenting Krasheninnikov dormancy (~1550), early August 2025 eruption onset, and July 30, 2025 earthquake context"
     }
   ]
 }
