@@ -11,13 +11,24 @@
       "lng": 32.98,
       "folder": "case-01-chokwe",
       "json_file": "case-01-chokwe/case-01.json"
+    },
+    {
+      "id": "case-02",
+      "title": "Krasheninnikov Caldera, Kamchatka",
+      "location_label": "Krasheninnikov Volcano, Kamchatka Peninsula, Russia",
+      "short_description": "A bright new finger extended inside this twin-coned caldera while nearby slopes darkened over 48 days. Inspect NISAR's L-band radar passes to uncover what happened.",
+      "event_type": "volcano",
+      "lat": 54.593,
+      "lng": 160.273,
+      "folder": "case-02-krasheninnikov",
+      "json_file": "case-02-krasheninnikov/case-02.json"
     }
   ],
   "nasa_resources": [
     {
       "name": "ASF Data Search Vertex",
       "url": "https://search.asf.alaska.edu/",
-      "used_for": "Searching and locating NISAR L2 GCOV granules over Track 114 Frame 165"
+      "used_for": "Searching and locating NISAR L2 GCOV granules over Track 114 Frame 165 and Track 132 Frame 61"
     },
     {
       "name": "NASA Earthdata Cloud (earthaccess)",
@@ -27,7 +38,7 @@
     {
       "name": "What is Synthetic Aperture Radar (SAR)? (NASA Earthdata)",
       "url": "https://www.earthdata.nasa.gov/learn/backgrounders/what-is-sar",
-      "used_for": "Physical interpretation of L-band dual-polarization (HH/HV) backscatter and specular reflection"
+      "used_for": "Physical interpretation of L-band dual-polarization (HH/HV) backscatter, specular reflection, and surface roughness"
     }
   ]
 }
