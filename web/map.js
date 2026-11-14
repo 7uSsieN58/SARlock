@@ -134,6 +134,7 @@ async function loadCaseList() {
     list.innerHTML = "";
     cases.forEach((c) => {
       const li = document.createElement("li");
+      li.dataset.caseId = c.id;
       const a = document.createElement("a");
       a.href = `story.html?case=${encodeURIComponent(c.id)}`;
       a.className = "case-link";
@@ -145,9 +146,49 @@ async function loadCaseList() {
       li.append(a, place);
       list.appendChild(li);
     });
+    applyCompletion();
   } catch (err) {
     console.warn("Could not load case list:", err);
   }
 }
 
 document.addEventListener("DOMContentLoaded", loadCaseList);
+
+// Completion state for markers (static, in map.html) and list items (built above).
+// Both are matched by data-case-id. Nothing else is touched.
+function applyCompletion() {
+  if (!window.CaseProgress) return;
+  document.querySelectorAll("[data-case-id]").forEach((el) => {
+    const done = window.CaseProgress.isCompleted(el.dataset.caseId);
+    el.classList.toggle("is-completed", done);
+
+    if (el.classList.contains("hotspot")) {
+      // Markers have no visible name in the DOM for screen readers, so set one on the link.
+      const link = el.querySelector("a");
+      const name = el.querySelector(".label");
+      if (link && name) {
+        link.setAttribute("aria-label", done ? `${name.textContent}, completed` : name.textContent);
+      }
+    }
+
+    if (el.tagName === "LI") {
+      const link = el.querySelector(".case-link");
+      let check = link && link.querySelector(".case-check");
+      if (done && link && !check) {
+        check = document.createElement("span");
+        check.className = "case-check";
+        check.setAttribute("role", "img");
+        check.setAttribute("aria-label", "Completed");
+        check.textContent = "✓";
+        link.appendChild(check);
+      } else if (!done && check) {
+        check.remove();
+      }
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", applyCompletion);
+document.addEventListener("sarlock:progress", applyCompletion);
+// Pages restored from the back-forward cache keep their old DOM, so refresh them.
+window.addEventListener("pageshow", applyCompletion);

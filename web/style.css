@@ -384,3 +384,51 @@ button:disabled {
 }
 .case-link:hover { text-decoration: underline; }
 .case-place { color: #aab7c8; font-size: 14px; }
+
+/* ---------- Case completion (map) ---------- */
+/* Completed markers: green in place of red, a steady glow (no pulse), and a check badge. */
+#content-in-map-page .leftside .hotspot.is-completed {
+  background-color: #3a8f6b;
+  animation: none;
+  box-shadow: 0 0 12px rgba(58, 143, 107, 0.9), 0 0 0 3px rgba(0, 0, 0, 0.55);
+}
+#content-in-map-page .leftside .hotspot.is-completed::after {
+  content: "\2713";
+  position: absolute;
+  top: -9px;
+  right: -9px;
+  z-index: 3;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #3a8f6b;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 16px;
+  text-align: center;
+  box-shadow: 0 0 0 2px #000;
+  pointer-events: none;
+}
+/* Completed list items: green border and tint. Layout, spacing and hover are unchanged. */
+.case-list li.is-completed {
+  border-color: rgba(58, 143, 107, 0.85);
+  background-color: rgba(58, 143, 107, 0.18);
+}
+.case-list li.is-completed .case-link {
+  color: #7fd1ad;
+}
+.case-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-left: 8px;
+  border-radius: 50%;
+  background: #3a8f6b;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: middle;
+}
