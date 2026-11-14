@@ -388,3 +388,20 @@ button:disabled {
 #content-in-map-page .leftside .hotspot.is-complete .label{
     background-color: #b8f4ce;
 }
+
+/* Sar glides toward a hovered globe point and returns when the pointer leaves */
+#narrator-img{
+    transition: left 0.6s ease, top 0.6s ease, width 0.6s ease;
+}
+#narrator-img.is-moving{
+    position: fixed;
+    z-index: 60;
+    width: 120px;
+    pointer-events: none;
+}
+
+/* Keep the case name and its place on separate lines in the case list */
+.case-link .case-place{
+    display: block;
+    margin-top: 4px;
+}

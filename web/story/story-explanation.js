@@ -19,6 +19,7 @@ const TABS = [
 
 export const explanationStage = {
   mount(host, ctx) {
+    ctx.sar.setZone("right");
     const e = ctx.experience;
     const reveal = e.reveal || {};
     const how = e.how_nisar_detected_it || {};
