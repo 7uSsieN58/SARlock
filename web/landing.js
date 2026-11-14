@@ -12,7 +12,7 @@ const NARRATOR = {
     ["amazed", "And the amazing part? I can help scientists detect changes that might otherwise go unnoticed!"],
 
     ["celebrating", "So, what do you say? Let's explore Earth!"]
-    ],
+  ],
   soundOff: ["thinking", "Sound off. I'll be quiet... but I'll still be here!"],
   soundOn:  ["amazed",   "Sound on! Let's go."]
 };
@@ -20,6 +20,16 @@ const NARRATOR = {
 let currentLandingIndex = 0;
 let typingTimeout = null;
 let autoAdvanceTimeout = null;
+
+// Runs the callback once the whole page has loaded (images, CSS, scripts).
+// If the page has already finished loading, it runs immediately.
+function runWhenPageLoaded(callback) {
+  if (document.readyState === "complete") {
+    callback();
+  } else {
+    window.addEventListener("load", callback, { once: true });
+  }
+}
 
 /**
  * Types out dialogue letter-by-letter and automatically triggers the next line when finished.
@@ -84,8 +94,8 @@ function playNextLandingLine() {
   }
 }
 
-// Start sequence automatically after a 3-second delay on page load
-document.addEventListener("DOMContentLoaded", () => {
+// Start sequence 1.5 seconds after the page has fully loaded
+runWhenPageLoaded(() => {
   setTimeout(() => {
     playNextLandingLine();
   }, 1500);

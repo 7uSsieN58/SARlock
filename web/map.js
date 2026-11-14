@@ -1,4 +1,3 @@
-
 const NARRATOR = {
   soundOff: ["thinking", "Sound off. I'll be quiet... but I'll still be here!"],
   soundOn: ["amazed", "Sound on! Let's go."],
@@ -18,6 +17,16 @@ const NARRATOR = {
 let typingTimeout = null;
 let autoAdvanceTimeout = null;
 let currentMapIndex = 0;
+
+// Runs the callback once the whole page has loaded (images, CSS, scripts).
+// If the page has already finished loading, it runs immediately.
+function runWhenPageLoaded(callback) {
+  if (document.readyState === "complete") {
+    callback();
+  } else {
+    window.addEventListener("load", callback, { once: true });
+  }
+}
 
 
 // Type dialogue letter by letter
@@ -93,8 +102,8 @@ function playNextMapLine() {
 }
 
 
-// Start Map dialogue when page loads
-document.addEventListener("DOMContentLoaded", () => {
+// Start Map dialogue only after the page has fully loaded
+runWhenPageLoaded(() => {
 
   // Hide button initially
   const startBtn = document.getElementById("start-btn");
