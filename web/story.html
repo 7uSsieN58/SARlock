@@ -7,7 +7,9 @@
     <link rel="icon" type="image/png" href="assets/images/logo_nobg_circular.png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="story.css">
+    <link rel="stylesheet" href="audio/sound-control.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="audio/audio-manager.js" defer></script>
     <script type="module" src="story/story.js"></script>
 </head>
 <body id="story-page" class="story-body">
@@ -15,10 +17,13 @@
         <a class="logo" href="index.html" aria-label="SARlock home">
             <img src="assets/images/logo_nobg_circular.png" alt="">
         </a>
-        <div class="git">
+        <div class="nav-tools">
+            <div id="sound-control"></div>
+            <div class="git">
             <a href="https://github.com/7uSsieN58/SARlock.git" target="_blank" rel="noopener" aria-label="GitHub repository">
                 <i class="fa-brands fa-github"></i>
             </a>
+        </div>
         </div>
     </nav>
 

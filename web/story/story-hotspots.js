@@ -1,3 +1,5 @@
+import { sfx } from "./story-audio.js";
+
 // Interactive hotspots on the radar images (Stage 2).
 //
 // Each hotspot has x and y as percentages of the image, so it stays in place
@@ -43,6 +45,7 @@ export function mountHotspots({ overlay, panel, hotspots, onSelect }) {
   });
 
   function open(spot) {
+    sfx("toggle");
     selectedId = spot.id;
     markers.forEach((m, id) => {
       const active = id === spot.id;
@@ -63,6 +66,7 @@ export function mountHotspots({ overlay, panel, hotspots, onSelect }) {
   }
 
   function close() {
+    sfx("leave");
     selectedId = null;
     markers.forEach((m) => {
       m.classList.remove("is-selected");

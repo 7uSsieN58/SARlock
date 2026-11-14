@@ -6,6 +6,7 @@ import { caseAsset, getChannels } from "./story-data.js";
 import { mountHotspots } from "./story-hotspots.js";
 import { SAR_LINES, UI } from "./story-text.js";
 import { escapeHtml } from "./story-encounter.js";
+import { sfx } from "./story-audio.js";
 
 export const discoveryStage = {
   mount(host, ctx) {
@@ -20,6 +21,7 @@ export const discoveryStage = {
     let channel = initial;
     let dragged = false;
     let position = 50;
+    let lastTickPosition = null;
 
     host.innerHTML = `
       <div class="discovery">
@@ -66,7 +68,7 @@ export const discoveryStage = {
         </div>
 
         <div class="discovery-next">
-          <button type="button" class="story-btn story-btn-primary" data-action="challenge">
+          <button type="button" class="story-btn story-btn-primary" data-action="challenge" data-sound="none">
             ${UI.takeChallenge}
           </button>
         </div>
@@ -114,6 +116,15 @@ export const discoveryStage = {
       compare.setAttribute("aria-valuenow", String(Math.round(position)));
     }
 
+    // The slider sound plays only after the handle moves at least 6%, so a drag
+    // gives a soft tick at intervals rather than a stream of sounds.
+    function tickSlider(force) {
+      if (force || lastTickPosition === null || Math.abs(position - lastTickPosition) >= 6) {
+        lastTickPosition = position;
+        sfx("slider");
+      }
+    }
+
     // Pointer drag works for mouse and touch alike.
     let dragging = false;
     function positionFromEvent(event) {
@@ -125,13 +136,17 @@ export const discoveryStage = {
       compare.setPointerCapture(event.pointerId);
       compare.classList.add("is-dragging");
       setPosition(positionFromEvent(event));
+      tickSlider(true);
       if (!dragged) {
         dragged = true;
         ctx.sar.say(SAR_LINES.discoveryDrag(), { state: "explaining" });
       }
     });
     compare.addEventListener("pointermove", (event) => {
-      if (dragging) setPosition(positionFromEvent(event));
+      if (dragging) {
+        setPosition(positionFromEvent(event));
+        tickSlider(false);
+      }
     });
     const endDrag = () => {
       dragging = false;
@@ -142,8 +157,8 @@ export const discoveryStage = {
 
     // Keyboard support: left and right arrows move the handle.
     compare.addEventListener("keydown", (event) => {
-      if (event.key === "ArrowLeft") { event.preventDefault(); setPosition(position - 2); }
-      if (event.key === "ArrowRight") { event.preventDefault(); setPosition(position + 2); }
+      if (event.key === "ArrowLeft") { event.preventDefault(); setPosition(position - 2); tickSlider(false); }
+      if (event.key === "ArrowRight") { event.preventDefault(); setPosition(position + 2); tickSlider(false); }
     });
 
     host.querySelectorAll(".channel-btn").forEach((btn) => {
@@ -151,6 +166,7 @@ export const discoveryStage = {
         const next = btn.dataset.channel;
         if (next === channel) return;
         channel = next;
+        sfx("toggle");
         applyChannel();
         ctx.sar.say(
           channel === "HV" ? SAR_LINES.switchedToHV() : SAR_LINES.switchedToHH(),

@@ -6,6 +6,7 @@
 
 import { CHALLENGE_FEEDBACK, SAR_LINES, UI } from "./story-text.js";
 import { escapeHtml } from "./story-encounter.js";
+import { sfx } from "./story-audio.js";
 
 export const challengeStage = {
   mount(host, ctx) {
@@ -42,7 +43,7 @@ export const challengeStage = {
 
         <div class="challenge-actions">
           <button type="button" class="story-btn story-btn-ghost" data-action="retry" hidden>${UI.tryAgain}</button>
-          <button type="button" class="story-btn story-btn-primary" data-action="continue" hidden>${UI.seeExplanation}</button>
+          <button type="button" class="story-btn story-btn-primary" data-action="continue" data-sound="none" hidden>${UI.seeExplanation}</button>
         </div>
       </div>`;
 
@@ -69,6 +70,7 @@ export const challengeStage = {
 
       if (index === correctIndex) {
         solved = true;
+        sfx("success");
         optionBtns.forEach((btn) => { btn.disabled = true; });
         optionBtns[index].classList.add("is-correct");
         setFeedback("correct", CHALLENGE_FEEDBACK.correct);
@@ -77,6 +79,7 @@ export const challengeStage = {
         ctx.sar.say(SAR_LINES.challengeRight(), { state: "celebrating" });
       } else {
         optionBtns[index].classList.add("is-wrong");
+        sfx("error");
         setFeedback("wrong", CHALLENGE_FEEDBACK.wrong);
         retryBtn.hidden = false;
         ctx.sar.say(SAR_LINES.challengeWrong(), { state: "thinking" });

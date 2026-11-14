@@ -7,6 +7,7 @@
 
 import { SAR_LINES, UI } from "./story-text.js";
 import { escapeHtml } from "./story-encounter.js";
+import { sfx } from "./story-audio.js";
 
 const MAP_URL = "map.html";
 
@@ -18,6 +19,7 @@ export const impactStage = {
     const summary = e.summary || {};
     const takeaways = Array.isArray(summary.key_takeaways) ? summary.key_takeaways : [];
     const explored = new Set();
+    let achieved = false;
 
     host.innerHTML = `
       <div class="impact">
@@ -53,8 +55,8 @@ export const impactStage = {
         </section>
 
         <div class="final-nav">
-          <a class="story-btn story-btn-primary" href="${MAP_URL}" data-action="explore-another">${UI.exploreAnother}</a>
-          <a class="story-btn story-btn-ghost" href="${MAP_URL}" data-action="return-explorer">${UI.backToExplorer}</a>
+          <a class="story-btn story-btn-primary" href="${MAP_URL}" data-action="explore-another" data-sound="leave">${UI.exploreAnother}</a>
+          <a class="story-btn story-btn-ghost" href="${MAP_URL}" data-action="return-explorer" data-sound="leave">${UI.backToExplorer}</a>
         </div>
       </div>`;
 
@@ -66,6 +68,15 @@ export const impactStage = {
         const choice = choices[i];
         if (!choice) return;
         explored.add(i);
+        // Finishing the case on its best choice is the achievement moment, played once.
+        if (choice.best_choice) {
+          if (!achieved) {
+            achieved = true;
+            sfx("achievement");
+          }
+        } else {
+          sfx("toggle");
+        }
         choiceBtns.forEach((b, j) => {
           b.classList.toggle("is-selected", j === i);
           b.setAttribute("aria-pressed", String(j === i));

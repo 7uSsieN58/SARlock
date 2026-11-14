@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SARlock</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="audio/sound-control.css">
     <link rel="icon" type="image/png" href="assets/images/logo_nobg_circular.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="audio/audio-manager.js" defer></script>
     <script src="landing.js" defer></script>
 </head>
 <body class="landing">
@@ -14,10 +16,13 @@
         <div class="logo">
             <img src="assets/images/logo_nobg_circular.png" alt="">
         </div>
-        <div class="git">
+        <div class="nav-tools">
+            <div id="sound-control"></div>
+            <div class="git">
             <a href="https://github.com/OmarBahaa1/sarlock-project.git" target="_blank">
                     <i class="fa-brands fa-github"></i>
             </a>
+        </div>
         </div>
     </nav>
     <div class="content">
@@ -28,7 +33,7 @@
         <div class="char"><img id="narrator-img" src="assets/narrator/greeting_nobg.png" alt="Zack"></div>
         <div class="text">
             <p id="narrator-text" style="white-space: pre-wrap;"></p>
-            <a href="map.html" id="start-btn" style="display: none;">Start Mission 🚀</a>
+            <a href="map.html" id="start-btn" data-sound="enter" style="display: none;">Start Mission 🚀</a>
         </div>
     </div>
 </body>
