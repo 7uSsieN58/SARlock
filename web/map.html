@@ -22,6 +22,7 @@
     </nav>
     <main class="container" id="content-in-map-page">
         <div class="leftside">
+            <ul id="case-list" class="case-list" aria-label="Available case stories"></ul>
             <model-viewer
                 id="earth"
                 class="viewer"
@@ -35,7 +36,15 @@
                     data-position="-0.5522201760530916m -0.309041248500574m -0.7739195982394437m" 
                     data-normal="-0.550137473012261m -0.2977314700604816m -0.780195316906804m"
                     data-info="Chókwè District, Gaza Province, Mozambique">
-                <a class="label" href="story.html?case=case-01">Mozambique</a>
+                    <a href="story.html?case=case-01"></a>
+                    <p class="label">Russia</p>
+                </div>
+                <div class="hotspot" slot="hotspot-russia"
+                    data-position="-0.19610626608373827m 0.823825883597045m 0.5316048287472055m" 
+                    data-normal="-0.20147444199664408m 0.8276511716682419m 0.5238335491912748m"
+                    data-info="Eastern Kamchatka Highlands, Russia">
+                    <a href="story.html?case=case-02"></a>
+                    <p class="label">Mozambique</p> 
                 </div>
 
             </model-viewer>
@@ -45,7 +54,6 @@
             <div class="text">
                 <p id="narrator-text" style="white-space: pre-wrap;"></p>
             </div>
-            <ul id="case-list" class="case-list" aria-label="Available case stories"></ul>
         </div>
     </main>
 

@@ -154,6 +154,7 @@ nav .logo{
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 #content-in-map-page .map_side {
@@ -320,6 +321,8 @@ button:disabled {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  position: absolute;
+  right: 20px;
 }
 .case-list li {
   display: flex;
