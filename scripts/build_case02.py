@@ -10,13 +10,15 @@ after_granule  = "NISAR_L2_PR_GCOV_032_132_D_061_4005_DHDH_A_20261009T084107_202
 
 try:
     g_res = asf.granule_search([before_granule])
-    flight_dir = g_res[0].properties.get("flightDirection", "DESCENDING")
-    print(f"ASF Metadata flightDirection for _D_ granule: {flight_dir}")
+    flight_dir = g_res[0].properties.get("flightDirection") or "UNVERIFIED"
+    print(f"ASF flightDirection: {flight_dir} | startTime: {g_res[0].properties.get('startTime')}")
 except Exception as ex:
-    flight_dir = "DESCENDING"
-    print(f"ASF lookup skipped ({ex}); using granule flag _D_ -> {flight_dir}")
+    flight_dir = "UNVERIFIED"
+    print(f"ASF lookup failed ({ex}); granule flag _D_ suggests descending but NOT verified")
 
-for web_file in pathlib.Path("web").glob("*.js"):
+dir_label = flight_dir.capitalize() if flight_dir in ("DESCENDING", "ASCENDING") else "Descending (per granule name, unverified)"
+
+for web_file in [f for ext in ("*.js", "*.html") for f in pathlib.Path("web").rglob(ext)]:
     txt = web_file.read_text(encoding="utf-8")
     if "event_type" in txt:
         print(f"NOTE: 'event_type' referenced in {web_file}")
@@ -165,7 +167,7 @@ case_data = {
         {
             "id": "s1",
             "name": "NASA / ISRO via ASF DAAC",
-            "title": "NISAR L2 GCOV PROVISIONAL Data (Track 132, Frame 61 Descending, 2026-08-22 & 2026-10-09)",
+            "title": f"NISAR L2 GCOV PROVISIONAL Data (Track 132, Frame 61 {dir_label}, 2026-08-22 & 2026-10-09)",
             "url": "https://search.asf.alaska.edu/#/",
             "accessed": "2026-11-13"
         },
@@ -312,7 +314,7 @@ case_data = {
             "reveal": {
                 "event_label": "Volcanic Eruption",
                 "source_ids": ["s3", "s4"],
-                "summary": "Krasheninnikov Volcano\u2014with no documented eruption since about 1550\u2014began erupting in early August 2025 (onset about 16:38 UTC on August 2, already August 3 in Kamchatka), a few days after the M8.8 Kamchatka earthquake of July 30 (local time; July 29 UTC). NASA describes the quake as apparently jolting the volcano awake; whether it triggered the eruption is a research hypothesis that this dataset does not test. NISAR first imaged the volcano on December 25, 2025, so our August 22 \u2013 October 9, 2026 pair shows mid-eruption change, not before versus after. Over these 48 days it is consistent with new rough lava advancing along the eastern flow field (cyan) and a backscatter drop on slopes west of the northern cone (red) that may reflect fine tephra among other possible causes.",
+                "summary": "Krasheninnikov Volcano\u2014with no documented eruption since about 1550\u2014began erupting in early August 2025 (onset about 16:50 UTC on August 2, already August 3 in Kamchatka), a few days after the M8.8 Kamchatka earthquake of July 30 (local time; July 29 UTC). NASA describes the quake as apparently jolting the volcano awake; whether it triggered the eruption is a research hypothesis that this dataset does not test. NISAR first imaged the volcano on December 25, 2025, so our August 22 \u2013 October 9, 2026 pair shows mid-eruption change, not before versus after. Over these 48 days it is consistent with new rough lava advancing along the eastern flow field (cyan) and a backscatter drop on slopes west of the northern cone (red) that may reflect fine tephra among other possible causes.",
                 "metrics": [
                     {
                         "label": "Eastern Lava Advance (hs-1, 3\u00d73 ROI)",
@@ -341,7 +343,10 @@ case_data = {
                     "scope": "general SAR physics"
                 },
                 "polarization_observed": {
-                    "text": "Between August 22 and October 9, 2026, NISAR's Track 132 GCOV pair recorded a strong increase in both HH (+7.40 dB) and HV (+8.19 dB) along the northern edge of the eastern lava field (cyan), a sharp drop west of the northern cone (-5.45 dB HH, -7.03 dB HV; red), and near-zero change on the pre-existing northwestern lava lobe (white).",
+                    "text": (f"Between August 22 and October 9, 2026, NISAR's Track 132 GCOV pair recorded a strong increase in both "
+                             f"HH ({hs_metrics['hs-1'][1]-hs_metrics['hs-1'][0]:+.2f} dB) and HV ({hs_metrics['hs-1'][3]-hs_metrics['hs-1'][2]:+.2f} dB) along the northern edge of the eastern lava "
+                             f"field (cyan), a sharp drop west of the northern cone ({hs_metrics['hs-2'][1]-hs_metrics['hs-2'][0]:+.2f} dB HH, {hs_metrics['hs-2'][3]-hs_metrics['hs-2'][2]:+.2f} dB HV; red), "
+                             f"and near-zero change on the pre-existing northwestern lava lobe (white)."),
                     "source_id": "s1",
                     "scope": "this event only"
                 },
@@ -395,7 +400,7 @@ case_data = {
         }
     ],
     "credit": "NISAR (NASA/ISRO), distributed by ASF DAAC",
-    "caveat": "Processed from PROVISIONAL V1 NISAR L2 GCOV data (Track 132, Frame 61 Descending; fully calibrated, partially validated). Krasheninnikov's eruption began in early August 2025, before NISAR's first observation on December 25, 2025; therefore this pair measures mid-eruption surface change between August 22 and October 9, 2026 rather than pre- vs. post-eruption conditions.",
+    "caveat": f"Processed from PROVISIONAL V1 NISAR L2 GCOV data (Track 132, Frame 61 {dir_label}; fully calibrated, partially validated). Krasheninnikov's eruption began in early August 2025, before NISAR's first observation on December 25, 2025; therefore this pair measures mid-eruption surface change between August 22 and October 9, 2026 rather than pre- vs. post-eruption conditions.",
     "source_ids": ["s1", "s3", "s4", "s5"]
 }
 
@@ -508,7 +513,8 @@ early_text = json.dumps([
     loaded["experiences"][1]
 ]).lower()
 
-for forbidden in ["volcano", "volcanic", "lava", "eruption", "tephra", "ash", "caldera", "cone", "summit", "krasheninnikov"]:
-    assert not re.search(rf"\b{forbidden}\b", early_text), f"Spoiler word '{forbidden}' found in pre-challenge text!"
+SPOILER_RX = re.compile(r"\b(volcan\w*|caldera|cones?|twin-coned|crater|summit|vent|lava|ash|tephra|erupt\w*|magma|lahar|krasheninnikov)\b")
+m = SPOILER_RX.search(early_text)
+assert not m, f"Spoiler word '{m.group(0)}' found in pre-challenge text!"
 
 print("CASE 02 REBUILT & ALL AUDITED CHECKS (UTF-8, ANTI-SPOILER, SOURCES, IMAGE & SCHEMA) PASSED!")
