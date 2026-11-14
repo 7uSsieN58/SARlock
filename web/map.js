@@ -1,119 +1,84 @@
+import { Progress } from "./progress.js";
 
 const NARRATOR = {
   soundOff: ["thinking", "Sound off. I'll be quiet... but I'll still be here!"],
   soundOn: ["amazed", "Sound on! Let's go."],
-
   map: [
     ["greeting", "Alright, here we are! This is our little window to the world."],
-
-    ["explaining", "See those glowing points on the map? Each one represents a real event that happened somewhere on Earth."],
-
-    ["amazed", "And trust me, each location has its own story. Some are pretty surprising!"],
-
-    ["explaining", "Go ahead, pick any location you're curious about. I'll take you there and show you what happened."]
-  ]
+    ["explaining", "Each glowing point is a real NISAR case. Pick a point or its case card to open the evidence trail."],
+    ["amazed", "You can return here anytime. Completed cases stay marked so you can see your progress."],
+  ],
 };
 
-// Animation timers
 let typingTimeout = null;
 let autoAdvanceTimeout = null;
 let currentMapIndex = 0;
 
-
-// Type dialogue letter by letter
-function speakLetterByLetterAuto(
-  dialogueData,
-  textElement,
-  imgElement,
-  speedMs = 30,
-  pauseMs = 2500
-) {
+function speakLetterByLetterAuto(dialogueData, textElement, imgElement, speedMs = 30, pauseMs = 2500) {
   if (!textElement) return;
-
-  // Stop previous animations
   clearTimeout(typingTimeout);
   clearTimeout(autoAdvanceTimeout);
 
   const [pose, text] = dialogueData;
-
-  // Update Sar's expression
   if (imgElement) {
     imgElement.src = `assets/narrator/${pose}_nobg.png`;
     imgElement.alt = `Sar - ${pose}`;
   }
 
-  // Clear previous dialogue
   textElement.textContent = "";
-
   let charIndex = 0;
-
   function typeNextLetter() {
     if (charIndex < text.length) {
-      textElement.textContent += text[charIndex];
-      charIndex++;
-
+      textElement.textContent += text[charIndex++];
       typingTimeout = setTimeout(typeNextLetter, speedMs);
     } else {
-      // Move to next dialogue
-      autoAdvanceTimeout = setTimeout(
-        playNextMapLine,
-        pauseMs
-      );
+      autoAdvanceTimeout = setTimeout(playNextMapLine, pauseMs);
     }
   }
-
   typeNextLetter();
 }
 
-
-// Play the next Map dialogue
 function playNextMapLine() {
   const textContainer = document.getElementById("narrator-text");
-  const avatarContainer = document.getElementById("narrator-img");
-  const startBtn = document.getElementById("start-btn");
-
+  const avatar = document.getElementById("narrator-img");
   if (currentMapIndex < NARRATOR.map.length) {
-
-    speakLetterByLetterAuto(
-      NARRATOR.map[currentMapIndex],
-      textContainer,
-      avatarContainer,
-      30,
-      2500
-    );
-
-    currentMapIndex++;
-
-  } else {
-    // Show button after all dialogues finish
-    if (startBtn) {
-      startBtn.style.display = "inline-block";
-    }
+    speakLetterByLetterAuto(NARRATOR.map[currentMapIndex++], textContainer, avatar);
   }
 }
 
+function updateProgressSummary(total) {
+  const summary = document.getElementById("progress-summary");
+  if (!summary) return;
+  const completed = Math.min(total, Progress.completedCount());
+  summary.textContent = `${completed}/${total} cases completed`;
+  summary.dataset.complete = String(completed === total && total > 0);
+}
 
-// Start Map dialogue when page loads
-document.addEventListener("DOMContentLoaded", () => {
+function createCaseCard(entry) {
+  const done = Progress.isDone(entry.id);
+  const li = document.createElement("li");
+  li.className = `case-item${done ? " is-complete" : ""}`;
 
-  // Hide button initially
-  const startBtn = document.getElementById("start-btn");
+  const a = document.createElement("a");
+  a.href = `story.html?case=${encodeURIComponent(entry.id)}`;
+  a.className = "case-link";
+  a.setAttribute("aria-label", `Open case: ${entry.title || entry.id}`);
 
-  if (startBtn) {
-    startBtn.style.display = "none";
-  }
+  const title = document.createElement("strong");
+  title.textContent = entry.title || entry.id;
+  const place = document.createElement("span");
+  place.className = "case-place";
+  place.textContent = entry.location_label || "";
+  a.append(title, place);
 
-  // Reset dialogue index
-  currentMapIndex = 0;
+  const status = document.createElement("span");
+  status.className = "case-status";
+  status.textContent = done ? "Completed" : "Open case";
+  status.setAttribute("aria-label", done ? "Case completed" : "Case not completed");
+  li.append(a, status);
+  return li;
+}
 
-  // Start after 1.5 seconds
-  setTimeout(playNextMapLine, 1500);
-});
-
-
-// Case list for the Earth Explorer.
-// Shows title and location only. event_type and short_description are left out
-// on purpose, because they would reveal the event before the story does.
 async function loadCaseList() {
   const list = document.getElementById("case-list");
   if (!list) return;
@@ -122,22 +87,17 @@ async function loadCaseList() {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const index = await response.json();
     const cases = Array.isArray(index.cases) ? index.cases : [];
-    list.innerHTML = "";
-    cases.forEach((c) => {
-      const li = document.createElement("li");
-      const a = document.createElement("a");
-      a.href = `story.html?case=${encodeURIComponent(c.id)}`;
-      a.className = "case-link";
-      a.textContent = c.title || c.id;
-      const place = document.createElement("span");
-      place.className = "case-place";
-      place.textContent = c.location_label || "";
-      li.append(a, place);
-      list.appendChild(li);
-    });
+    list.replaceChildren(...cases.map(createCaseCard));
+    updateProgressSummary(cases.length);
   } catch (err) {
     console.warn("Could not load case list:", err);
   }
 }
 
-document.addEventListener("DOMContentLoaded", loadCaseList);
+document.addEventListener("DOMContentLoaded", () => {
+  currentMapIndex = 0;
+  setTimeout(playNextMapLine, 900);
+  loadCaseList();
+});
+
+window.addEventListener("pageshow", loadCaseList);

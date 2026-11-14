@@ -7,6 +7,7 @@
 
 import { SAR_LINES, UI } from "./story-text.js";
 import { escapeHtml } from "./story-encounter.js";
+import { Progress } from "../progress.js";
 
 const MAP_URL = "map.html";
 
@@ -40,6 +41,11 @@ export const impactStage = {
 
         <div class="choice-feedback" role="status" aria-live="polite" hidden></div>
 
+        <div class="case-complete" role="status" hidden>
+          <strong>Case complete</strong>
+          <span>Sar saved this evidence trail to your Earth Explorer progress.</span>
+        </div>
+
         <section class="summary" aria-labelledby="summary-title">
           <h2 id="summary-title">In short</h2>
           ${summary.what_happened ? `<div class="summary-row"><h3>What happened</h3><p>${escapeHtml(summary.what_happened)}</p></div>` : ""}
@@ -60,6 +66,7 @@ export const impactStage = {
 
     const choiceBtns = [...host.querySelectorAll(".choice")];
     const feedbackEl = host.querySelector(".choice-feedback");
+    const completeEl = host.querySelector(".case-complete");
 
     choiceBtns.forEach((btn, i) => {
       btn.addEventListener("click", () => {
@@ -79,6 +86,9 @@ export const impactStage = {
         feedbackEl.hidden = false;
         feedbackEl.className = `choice-feedback ${choice.best_choice ? "is-best" : "is-other"}`;
         feedbackEl.textContent = choice.feedback || "";
+
+        Progress.markDone(ctx.caseId, { title: ctx.entry.title || ctx.data.title });
+        completeEl.hidden = false;
 
         ctx.sar.say(
           choice.best_choice ? SAR_LINES.impactBest() : SAR_LINES.impactOther(),

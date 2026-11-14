@@ -853,3 +853,27 @@
 }
 
 .stage-nav { background: rgba(0, 0, 0, 0.85); }
+
+
+.case-complete {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 18px;
+  padding: 14px 18px;
+  border: 1px solid rgba(111, 220, 164, 0.72);
+  border-radius: 14px;
+  background: rgba(58, 143, 107, 0.18);
+  color: var(--st-text);
+  animation: st-rise 0.4s ease both;
+}
+.case-complete strong {
+  color: #b8f4ce;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 13px;
+}
+.case-complete span {
+  color: var(--st-muted);
+  font-size: 14px;
+}

@@ -1,5 +1,5 @@
 /////////////////////  Landing Page & Game Dialogue Controller  ////////////////////////
-/////////////  Zack  ///////////////
+/////////////  Sar  ///////////////
 
 const NARRATOR = {
   landing: [
@@ -36,7 +36,7 @@ function speakLetterByLetterAuto(dialogueData, textElement, imgElement, speedMs 
   // 1. Update Narrator Pose Image
   if (imgElement) {
     imgElement.src = `assets/narrator/${pose}_nobg.png`;
-    imgElement.alt = `Zack - ${pose}`;
+    imgElement.alt = `Sar - ${pose}`;
   }
 
   // 2. Clear current text box

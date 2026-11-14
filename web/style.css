@@ -341,3 +341,40 @@ button:disabled {
 }
 .case-link:hover { text-decoration: underline; }
 .case-place { color: #aab7c8; font-size: 14px; }
+
+
+/* ---------- Persistent case progress ---------- */
+.case-item {
+    position: relative;
+}
+.case-item.is-complete {
+    border-color: rgba(111, 220, 164, 0.78);
+    box-shadow: 0 0 16px rgba(58, 143, 107, 0.18);
+}
+.case-item.is-complete .case-link strong {
+    color: #b8f4ce;
+}
+.case-status {
+    align-self: flex-start;
+    margin-top: 4px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.10);
+    color: #aab7c8;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+.case-item.is-complete .case-status {
+    background: rgba(58, 143, 107, 0.30);
+    color: #b8f4ce;
+}
+.progress-summary {
+    margin-top: 8px;
+    color: #95c9de;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+}
+.progress-summary[data-complete="true"] {
+    color: #b8f4ce;
+}
