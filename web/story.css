@@ -918,3 +918,12 @@
   60% { transform: scale(1.02); opacity: 1; }
   100% { transform: scale(1); }
 }
+
+/* Folded bubble: Sar stays on screen, the speech bubble steps out of the way */
+.sar.is-collapsed .sar-bubble {
+  display: none;
+}
+.sar #sar-img {
+  pointer-events: auto;
+  cursor: pointer;
+}

@@ -96,13 +96,31 @@ function showPointLine(hotspot) {
   if (avatar) {
     avatar.src = `assets/narrator/${pose}_nobg.png`;
     avatar.alt = `Sar - ${pose}`;
-    avatar.classList.add("is-leaning");
   }
   textContainer.textContent = text;
+  moveSarToward(hotspot);
+}
+
+// Sar glides over to sit beside the hovered point, then goes back to its panel.
+function moveSarToward(hotspot) {
+  const avatar = document.getElementById("narrator-img");
+  if (!avatar) return;
+  const point = hotspot.getBoundingClientRect();
+  const size = avatar.getBoundingClientRect().width || 120;
+  const gap = 14;
+  const left = Math.max(8, point.left - size - gap);
+  const top = Math.max(8, point.top - size * 0.55);
+  avatar.classList.add("is-moving");
+  avatar.style.left = `${left}px`;
+  avatar.style.top = `${top}px`;
 }
 
 function resetLean() {
-  document.getElementById("narrator-img")?.classList.remove("is-leaning");
+  const avatar = document.getElementById("narrator-img");
+  if (!avatar) return;
+  avatar.classList.remove("is-moving");
+  avatar.style.left = "";
+  avatar.style.top = "";
 }
 
 function createCaseCard(entry) {
