@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" href="assets/images/logo_nobg_circular.png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <script type="module" src="map.js"></script>
+    <script src="map.js" defer></script>
 </head>
 <body id="map-page">
     <nav>
@@ -35,25 +35,24 @@
                 <div class="hotspot" slot="hotspot-chokwe"
                     data-position="-0.5522201760530916m -0.309041248500574m -0.7739195982394437m" 
                     data-normal="-0.550137473012261m -0.2977314700604816m -0.780195316906804m"
-                    data-info="Chókwè District, Gaza Province, Mozambique" aria-label="Open Chókwè flood case">
+                    data-info="Chókwè District, Gaza Province, Mozambique">
                     <a href="story.html?case=case-01"></a>
-                    <p class="label">Mozambique</p>
+                    <p class="label">Russia</p>
                 </div>
                 <div class="hotspot" slot="hotspot-russia"
                     data-position="-0.19610626608373827m 0.823825883597045m 0.5316048287472055m" 
                     data-normal="-0.20147444199664408m 0.8276511716682419m 0.5238335491912748m"
-                    data-info="Eastern Kamchatka Highlands, Russia" aria-label="Open Kamchatka volcano case">
+                    data-info="Eastern Kamchatka Highlands, Russia">
                     <a href="story.html?case=case-02"></a>
-                    <p class="label">Kamchatka</p>
+                    <p class="label">Mozambique</p> 
                 </div>
 
             </model-viewer>
         </div>
         <div class="map_side">
-            <div class="char"><img id="narrator-img" src="assets/narrator/greeting_nobg.png" alt="Sar, your science guide"></div>
+            <div class="char"><img id="narrator-img" src="assets/narrator/greeting_nobg.png" alt="Zack"></div>
             <div class="text">
                 <p id="narrator-text" style="white-space: pre-wrap;"></p>
-                <p id="progress-summary" class="progress-summary" aria-live="polite">0/2 cases completed</p>
             </div>
         </div>
     </main>

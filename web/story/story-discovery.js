@@ -9,7 +9,6 @@ import { escapeHtml } from "./story-encounter.js";
 
 export const discoveryStage = {
   mount(host, ctx) {
-    ctx.sar.setZone("right");
     const e = ctx.experience;
     const slider = e.slider_comparison || {};
     const before = slider.before || {};

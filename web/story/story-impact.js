@@ -7,13 +7,11 @@
 
 import { SAR_LINES, UI } from "./story-text.js";
 import { escapeHtml } from "./story-encounter.js";
-import { Progress } from "../progress.js";
 
 const MAP_URL = "map.html";
 
 export const impactStage = {
   mount(host, ctx) {
-    ctx.sar.setZone("right");
     const e = ctx.experience;
     const action = e.take_action || {};
     const choices = Array.isArray(action.choices) ? action.choices : [];
@@ -42,11 +40,6 @@ export const impactStage = {
 
         <div class="choice-feedback" role="status" aria-live="polite" hidden></div>
 
-        <div class="case-complete" role="status" hidden>
-          <strong>Case complete</strong>
-          <span>Sar saved this evidence trail to your Earth Explorer progress.</span>
-        </div>
-
         <section class="summary" aria-labelledby="summary-title">
           <h2 id="summary-title">In short</h2>
           ${summary.what_happened ? `<div class="summary-row"><h3>What happened</h3><p>${escapeHtml(summary.what_happened)}</p></div>` : ""}
@@ -67,7 +60,6 @@ export const impactStage = {
 
     const choiceBtns = [...host.querySelectorAll(".choice")];
     const feedbackEl = host.querySelector(".choice-feedback");
-    const completeEl = host.querySelector(".case-complete");
 
     choiceBtns.forEach((btn, i) => {
       btn.addEventListener("click", () => {
@@ -88,22 +80,10 @@ export const impactStage = {
         feedbackEl.className = `choice-feedback ${choice.best_choice ? "is-best" : "is-other"}`;
         feedbackEl.textContent = choice.feedback || "";
 
-        // Completion is saved once. Later clicks only change the feedback.
-        const firstCompletion = !Progress.isDone(ctx.caseId);
-        Progress.markDone(ctx.caseId, { title: ctx.entry.title || ctx.data.title });
-        completeEl.hidden = false;
-
-        if (firstCompletion) {
-          completeEl.classList.remove("is-celebrating");
-          void completeEl.offsetWidth; // restart the celebration animation
-          completeEl.classList.add("is-celebrating");
-          ctx.sar.say(SAR_LINES.caseComplete(), { state: "celebrating" });
-        } else {
-          ctx.sar.say(
-            choice.best_choice ? SAR_LINES.impactBest() : SAR_LINES.impactOther(),
-            { state: choice.best_choice ? "celebrating" : "thinking" }
-          );
-        }
+        ctx.sar.say(
+          choice.best_choice ? SAR_LINES.impactBest() : SAR_LINES.impactOther(),
+          { state: choice.best_choice ? "celebrating" : "thinking" }
+        );
       });
     });
 

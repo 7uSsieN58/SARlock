@@ -62,7 +62,6 @@ export function createSar() {
 
   function showContinueIfNeeded() {
     nextBtn.hidden = !pendingContinue;
-    if (!typeTimer) scheduleCollapse();
   }
 
   function typeNext() {
@@ -88,7 +87,6 @@ export function createSar() {
     fullText = String(message || "");
     pendingContinue = typeof options.onContinue === "function" ? options.onContinue : null;
     root.hidden = false;
-    expandBubble();
 
     if (reducedMotion) {
       finishTyping();
@@ -98,37 +96,6 @@ export function createSar() {
     text.textContent = "";
     showContinueIfNeeded();
     typeNext();
-  }
-
-  /**
-   * Move Sar to a spot on the screen: "right" (default), "left", or "center".
-   * Stages call this on mount so Sar moves with the story, away from the
-   * radar images and controls it should not cover.
-   */
-  // Once a line has finished and nothing is waiting on the user, the bubble
-  // folds away after a few seconds so it stops covering the stage. Sar's face
-  // stays visible. Tapping Sar opens the bubble again.
-  const COLLAPSE_MS = 6000;
-  let collapseTimer = null;
-
-  function expandBubble() {
-    clearTimeout(collapseTimer);
-    root.classList.remove("is-collapsed");
-  }
-
-  function scheduleCollapse() {
-    clearTimeout(collapseTimer);
-    if (pendingContinue) return;
-    collapseTimer = setTimeout(() => {
-      // Never fold while a line is still being typed or a Continue button is waiting.
-      if (typeTimer || pendingContinue) return;
-      root.classList.add("is-collapsed");
-    }, COLLAPSE_MS);
-  }
-
-  function setZone(zone) {
-    const allowed = ["right", "left", "center"];
-    root.dataset.zone = allowed.includes(zone) ? zone : "right";
   }
 
   /** Set the character pose without changing the bubble text. */
@@ -141,14 +108,6 @@ export function createSar() {
     pendingContinue = null;
     root.hidden = true;
   }
-
-  // Tapping Sar's face opens a folded bubble.
-  img.addEventListener("click", () => {
-    if (root.classList.contains("is-collapsed")) {
-      expandBubble();
-      scheduleCollapse();
-    }
-  });
 
   // Click or tap on the bubble: finish typing early.
   bubble.addEventListener("click", (event) => {
@@ -164,7 +123,6 @@ export function createSar() {
   });
 
   setState("idle");
-  setZone("right");
 
-  return { say, react, setState, setZone, hide, get state() { return state; } };
+  return { say, react, setState, hide, get state() { return state; } };
 }
