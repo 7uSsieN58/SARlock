@@ -4,6 +4,7 @@ import { SAR_LINES, UI } from "./story-text.js";
 
 export const encounterStage = {
   mount(host, ctx) {
+    ctx.sar.setZone("center");
     const e = ctx.experience;
     const place = e.place_label || ctx.entry.location_label || ctx.entry.title;
 

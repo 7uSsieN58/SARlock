@@ -388,3 +388,17 @@ button:disabled {
 #content-in-map-page .leftside .hotspot.is-complete .label{
     background-color: #b8f4ce;
 }
+
+/* Sar leans toward the globe when a point is hovered */
+#narrator-img{
+    transition: transform 0.6s ease;
+}
+#narrator-img.is-leaning{
+    transform: translateX(-18px) rotate(-3deg);
+}
+
+/* Keep the case name and its place on separate lines in the case list */
+.case-link .case-place{
+    display: block;
+    margin-top: 4px;
+}

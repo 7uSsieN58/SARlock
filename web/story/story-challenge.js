@@ -9,6 +9,7 @@ import { escapeHtml } from "./story-encounter.js";
 
 export const challengeStage = {
   mount(host, ctx) {
+    ctx.sar.setZone("left");
     const e = ctx.experience;
     const options = Array.isArray(e.options) ? e.options : [];
     const hints = Array.isArray(e.hints) ? e.hints.filter(Boolean) : [];

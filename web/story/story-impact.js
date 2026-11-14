@@ -13,6 +13,7 @@ const MAP_URL = "map.html";
 
 export const impactStage = {
   mount(host, ctx) {
+    ctx.sar.setZone("right");
     const e = ctx.experience;
     const action = e.take_action || {};
     const choices = Array.isArray(action.choices) ? action.choices : [];
@@ -87,13 +88,22 @@ export const impactStage = {
         feedbackEl.className = `choice-feedback ${choice.best_choice ? "is-best" : "is-other"}`;
         feedbackEl.textContent = choice.feedback || "";
 
+        // Completion is saved once. Later clicks only change the feedback.
+        const firstCompletion = !Progress.isDone(ctx.caseId);
         Progress.markDone(ctx.caseId, { title: ctx.entry.title || ctx.data.title });
         completeEl.hidden = false;
 
-        ctx.sar.say(
-          choice.best_choice ? SAR_LINES.impactBest() : SAR_LINES.impactOther(),
-          { state: choice.best_choice ? "celebrating" : "thinking" }
-        );
+        if (firstCompletion) {
+          completeEl.classList.remove("is-celebrating");
+          void completeEl.offsetWidth; // restart the celebration animation
+          completeEl.classList.add("is-celebrating");
+          ctx.sar.say(SAR_LINES.caseComplete(), { state: "celebrating" });
+        } else {
+          ctx.sar.say(
+            choice.best_choice ? SAR_LINES.impactBest() : SAR_LINES.impactOther(),
+            { state: choice.best_choice ? "celebrating" : "thinking" }
+          );
+        }
       });
     });
 

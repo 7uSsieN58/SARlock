@@ -75,6 +75,8 @@ function markHotspots() {
     const focusLine = () => showPointLine(hotspot);
     hotspot.addEventListener("pointerenter", focusLine);
     hotspot.addEventListener("focusin", focusLine);
+    hotspot.addEventListener("pointerleave", resetLean);
+    hotspot.addEventListener("focusout", resetLean);
   });
 }
 
@@ -94,8 +96,13 @@ function showPointLine(hotspot) {
   if (avatar) {
     avatar.src = `assets/narrator/${pose}_nobg.png`;
     avatar.alt = `Sar - ${pose}`;
+    avatar.classList.add("is-leaning");
   }
   textContainer.textContent = text;
+}
+
+function resetLean() {
+  document.getElementById("narrator-img")?.classList.remove("is-leaning");
 }
 
 function createCaseCard(entry) {

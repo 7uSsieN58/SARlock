@@ -98,6 +98,16 @@ export function createSar() {
     typeNext();
   }
 
+  /**
+   * Move Sar to a spot on the screen: "right" (default), "left", or "center".
+   * Stages call this on mount so Sar moves with the story, away from the
+   * radar images and controls it should not cover.
+   */
+  function setZone(zone) {
+    const allowed = ["right", "left", "center"];
+    root.dataset.zone = allowed.includes(zone) ? zone : "right";
+  }
+
   /** Set the character pose without changing the bubble text. */
   function react(newState) {
     setState(newState);
@@ -123,6 +133,7 @@ export function createSar() {
   });
 
   setState("idle");
+  setZone("right");
 
-  return { say, react, setState, hide, get state() { return state; } };
+  return { say, react, setState, setZone, hide, get state() { return state; } };
 }

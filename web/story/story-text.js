@@ -70,6 +70,9 @@ export const SAR_LINES = {
 
   impactOther: () => "Interesting choice. Read the feedback and see if you'd change your mind.",
 
+  caseComplete: () =>
+    "Excellent work! You followed the evidence all the way through. Ready to explore another case?",
+
   caseDone: () => "Nice work. You followed the evidence all the way through.",
 };
 
