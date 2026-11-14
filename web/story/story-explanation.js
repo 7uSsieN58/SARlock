@@ -10,6 +10,7 @@
 
 import { SAR_LINES, UI } from "./story-text.js";
 import { escapeHtml } from "./story-encounter.js";
+import { sfx } from "./story-audio.js";
 
 const TABS = [
   { key: "observed", label: UI.reveal.observed, line: SAR_LINES.explanationWhat },
@@ -107,7 +108,7 @@ export const explanationStage = {
         </section>
 
         <div class="explanation-next">
-          <button type="button" class="story-btn story-btn-primary" data-action="impact">${UI.toImpact}</button>
+          <button type="button" class="story-btn story-btn-primary" data-action="impact" data-sound="none">${UI.toImpact}</button>
         </div>
       </div>`;
 
@@ -116,6 +117,7 @@ export const explanationStage = {
 
     function showTab(index) {
       activeTab = index;
+      sfx("toggle");
       tabs.forEach((tab, i) => {
         tab.setAttribute("aria-selected", String(i === index));
         tab.classList.toggle("is-active", i === index);

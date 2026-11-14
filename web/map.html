@@ -6,7 +6,9 @@
     <title>SARlock</title>
     <link rel="icon" type="image/png" href="assets/images/logo_nobg_circular.png">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="audio/sound-control.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="audio/audio-manager.js" defer></script>
     <script src="map.js" defer></script>
 </head>
 <body id="map-page">
@@ -14,10 +16,13 @@
         <div class="logo">
             <img src="assets/images/logo_nobg_circular.png" alt="">
         </div>
-        <div class="git">
+        <div class="nav-tools">
+            <div id="sound-control"></div>
+            <div class="git">
             <a href="https://github.com/7uSsieN58/SARlock.git" target="_blank">
                     <i class="fa-brands fa-github"></i>
             </a>
+        </div>
         </div>
     </nav>
     <main class="container" id="content-in-map-page">
@@ -36,14 +41,14 @@
                     data-position="-0.5522201760530916m -0.309041248500574m -0.7739195982394437m" 
                     data-normal="-0.550137473012261m -0.2977314700604816m -0.780195316906804m"
                     data-info="Chókwè District, Gaza Province, Mozambique">
-                    <a href="story.html?case=case-01"></a>
+                    <a href="story.html?case=case-01" data-sound="case-select"></a>
                     <p class="label">Mozambique</p>
                 </div>
                 <div class="hotspot" slot="hotspot-russia"
                     data-position="-0.19610626608373827m 0.823825883597045m 0.5316048287472055m" 
                     data-normal="-0.20147444199664408m 0.8276511716682419m 0.5238335491912748m"
                     data-info="Eastern Kamchatka Highlands, Russia">
-                    <a href="story.html?case=case-02"></a>
+                    <a href="story.html?case=case-02" data-sound="case-select"></a>
                     <p class="label">Russia</p> 
                 </div>
 

@@ -6,7 +6,9 @@
     <title>SARlock</title>
     <link rel="icon" type="image/png" href="assets/images/logo_nobg_circular.png">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="audio/sound-control.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="audio/audio-manager.js" defer></script>
     <script src="slides.js" defer></script>
 </head>
 <body id="slides-page">
@@ -14,10 +16,13 @@
         <div class="logo">
             <img src="assets/images/logo_nobg_circular.png" alt="">
         </div>
-        <div class="git">
+        <div class="nav-tools">
+            <div id="sound-control"></div>
+            <div class="git">
             <a href="https://github.com/7uSsieN58/SARlock.git" target="_blank">
                     <i class="fa-brands fa-github"></i>
             </a>
+        </div>
         </div>
     </nav>
     <section class="story-section">
@@ -70,9 +75,9 @@
         </div>
 
         <div class="slider-controls">
-            <button id="prevBtn" disabled>Previous</button>
+            <button id="prevBtn" data-sound="click" disabled>Previous</button>
             <span id="slideCounter">1 / 8</span>
-            <button id="nextBtn">Next</button>
+            <button id="nextBtn" data-sound="click">Next</button>
         </div>
     </section>
 </body>
