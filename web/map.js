@@ -54,6 +54,50 @@ function updateProgressSummary(total) {
   summary.dataset.complete = String(completed === total && total > 0);
 }
 
+// Mark each globe point green once its case is completed, and have Sar name
+// the case when a visitor points at it. Points are found by their own link,
+// so adding a case only needs a new hotspot in map.html.
+function caseIdFromHotspot(hotspot) {
+  const link = hotspot.querySelector("a[href]");
+  if (!link) return null;
+  return new URL(link.getAttribute("href"), window.location.href).searchParams.get("case");
+}
+
+function markHotspots() {
+  document.querySelectorAll("#earth .hotspot").forEach((hotspot) => {
+    const caseId = caseIdFromHotspot(hotspot);
+    if (!caseId) return;
+    const done = Progress.isDone(caseId);
+    hotspot.classList.toggle("is-complete", done);
+    hotspot.setAttribute("aria-label", `${hotspot.dataset.info || caseId}${done ? " (completed)" : ""}`);
+    if (hotspot.dataset.wired === "true") return;
+    hotspot.dataset.wired = "true";
+    const focusLine = () => showPointLine(hotspot);
+    hotspot.addEventListener("pointerenter", focusLine);
+    hotspot.addEventListener("focusin", focusLine);
+  });
+}
+
+function showPointLine(hotspot) {
+  const textContainer = document.getElementById("narrator-text");
+  const avatar = document.getElementById("narrator-img");
+  if (!textContainer) return;
+  clearTimeout(typingTimeout);
+  clearTimeout(autoAdvanceTimeout);
+  const caseId = caseIdFromHotspot(hotspot);
+  const done = caseId && Progress.isDone(caseId);
+  const place = hotspot.dataset.info || "this case";
+  const pose = done ? "celebrating" : "explaining";
+  const text = done
+    ? `${place}. You already finished this one! Want to look at it again?`
+    : `${place}. Click the point to open its evidence trail.`;
+  if (avatar) {
+    avatar.src = `assets/narrator/${pose}_nobg.png`;
+    avatar.alt = `Sar - ${pose}`;
+  }
+  textContainer.textContent = text;
+}
+
 function createCaseCard(entry) {
   const done = Progress.isDone(entry.id);
   const li = document.createElement("li");
@@ -89,6 +133,7 @@ async function loadCaseList() {
     const cases = Array.isArray(index.cases) ? index.cases : [];
     list.replaceChildren(...cases.map(createCaseCard));
     updateProgressSummary(cases.length);
+    markHotspots();
   } catch (err) {
     console.warn("Could not load case list:", err);
   }
@@ -98,6 +143,10 @@ document.addEventListener("DOMContentLoaded", () => {
   currentMapIndex = 0;
   setTimeout(playNextMapLine, 900);
   loadCaseList();
+  markHotspots();
 });
 
-window.addEventListener("pageshow", loadCaseList);
+window.addEventListener("pageshow", () => {
+  loadCaseList();
+  markHotspots();
+});
