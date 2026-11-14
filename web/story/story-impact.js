@@ -8,6 +8,7 @@
 import { SAR_LINES, UI } from "./story-text.js";
 import { escapeHtml } from "./story-encounter.js";
 import { sfx } from "./story-audio.js";
+import { markCaseCompleted } from "./story-progress.js";
 
 const MAP_URL = "map.html";
 
@@ -73,6 +74,8 @@ export const impactStage = {
           if (!achieved) {
             achieved = true;
             sfx("achievement");
+            // The best choice is where the case ends, so this is the completion point.
+            markCaseCompleted(ctx.caseId);
           }
         } else {
           sfx("toggle");
