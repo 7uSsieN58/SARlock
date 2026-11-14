@@ -127,7 +127,7 @@ async function loadCaseList() {
   const list = document.getElementById("case-list");
   if (!list) return;
   try {
-    const response = await fetch("../data/index.json", { cache: "no-cache" });
+    const response = await fetch("data/index.json", { cache: "no-cache" });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const index = await response.json();
     const cases = Array.isArray(index.cases) ? index.cases : [];
