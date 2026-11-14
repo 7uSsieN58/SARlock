@@ -199,7 +199,7 @@ nav .logo{
     width: 550px;
     height: 550px;
 }
-#content-in-map-page .leftside .hotspot{
+/* #content-in-map-page .leftside .hotspot{
     animation-name: loc;
     animation-timing-function: linear;
     animation-duration: 1s;
@@ -228,6 +228,44 @@ nav .logo{
     top: -50px;
     right: -50px;
     visibility: hidden;
+} */
+ #content-in-map-page .leftside .hotspot {
+  position: relative;
+  display: block;
+  width: 15px;
+  height: 15px;
+  background-color: #b61515;
+  border-radius: 50%;
+  animation: loc 1s linear infinite alternate;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+/* الـ link بيغطي النقطة كلها ويكبّر منطقة الكليك شوية */
+#content-in-map-page .leftside .hotspot a {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  z-index: 1;
+  cursor: pointer;
+}
+
+#content-in-map-page .leftside .hotspot .label {
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  background-color: #95c9de;
+  color: #000;
+  border-radius: 10px;
+  padding: 10px;
+  white-space: nowrap;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 2;
+}
+
+#content-in-map-page .leftside .hotspot:hover .label {
+  visibility: visible;
 }
 @keyframes loc {
     from{
@@ -330,7 +368,9 @@ button:disabled {
   gap: 2px;
   padding: 10px 14px;
   border-radius: 12px;
-  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(3px);
+  background-color: rgba(0, 0, 0, 0.271);
   border: 1px solid rgba(74, 137, 176, 0.5);
 }
 .case-link {
