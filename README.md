@@ -5,7 +5,8 @@ An interactive, story-driven web experience that turns **NASA–ISRO NISAR** rad
 Built for the **NASA Space Apps Challenge 2026 (NISAR challenge)**. The visitor meets **Sar**, a guide who represents the NISAR satellite, explores real radar evidence, makes a prediction, and then learns what happened.
 
 ---
-
+# the live demo:
+https://sarlock.h7asons21.workers.dev/
 ## Features
 
 - **Earth Explorer**: a 3D globe with case markers. Each marker is a real event location.
