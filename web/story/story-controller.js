@@ -6,6 +6,7 @@
 
 import { STAGE_ORDER, availableStages, getStage } from "./story-data.js";
 import { UI } from "./story-text.js";
+import { sfx } from "./story-audio.js";
 
 const TRANSITION_MS = 420;
 
@@ -73,6 +74,7 @@ export function createController({ root, navEl, ctx, stages }) {
   async function goTo(key) {
     if (busy || !order.includes(key)) return;
     if (order.indexOf(key) === index) return;
+    sfx("transition");
     busy = true;
     try {
       view.classList.add("is-leaving");

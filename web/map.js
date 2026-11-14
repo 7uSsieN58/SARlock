@@ -128,6 +128,7 @@ async function loadCaseList() {
       const a = document.createElement("a");
       a.href = `story.html?case=${encodeURIComponent(c.id)}`;
       a.className = "case-link";
+      a.dataset.sound = "enter";
       a.textContent = c.title || c.id;
       const place = document.createElement("span");
       place.className = "case-place";

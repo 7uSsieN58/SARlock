@@ -1,0 +1,66 @@
+/* Sound control (mute button + volume) and the nav wrapper that holds it.
+   Colors match the existing SARlock palette in style.css and story.css. */
+
+.nav-tools {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sound-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sound-control .sound-toggle {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 2px solid rgba(255, 255, 255, 0.296);
+  border-radius: 20px;
+  background-color: black;
+  box-shadow: 1.5px 1.5px 2px rgba(255, 255, 255, 0.184);
+  color: #e6eef3;
+  font-size: 16px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+}
+
+.sound-control .sound-toggle:hover {
+  border-color: rgba(149, 201, 222, 0.8);
+  color: #95c9de;
+}
+
+.sound-control .sound-toggle.is-off {
+  color: #aab7c8;
+  opacity: 0.85;
+}
+
+.sound-control .sound-volume {
+  width: 84px;
+  accent-color: #4a89b0;
+  cursor: pointer;
+}
+
+.sound-control .sound-volume:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.sound-toggle:focus-visible,
+.sound-volume:focus-visible {
+  outline: 2px solid #95c9de;
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .sound-control .sound-volume {
+    width: 60px;
+  }
+  .nav-tools {
+    gap: 8px;
+  }
+}

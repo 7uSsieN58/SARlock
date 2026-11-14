@@ -14,7 +14,7 @@ export const encounterStage = {
         <h2 class="encounter-question reveal-item">${escapeHtml(e.hook_question || "")}</h2>
         ${e.context ? `<p class="encounter-context reveal-item">${escapeHtml(e.context)}</p>` : ""}
         <ul class="fact-list" aria-label="Key facts"></ul>
-        <button type="button" class="story-btn story-btn-primary reveal-item" data-action="explore">
+        <button type="button" class="story-btn story-btn-primary reveal-item" data-action="explore" data-sound="none">
           ${UI.letsExplore}
         </button>
       </div>`;

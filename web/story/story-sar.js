@@ -21,6 +21,8 @@ const POSE_FOR_STATE = {
   celebrating: "celebrating",
 };
 
+import { sfx } from "./story-audio.js";
+
 const TYPE_SPEED_MS = 22;
 
 export function createSar() {
@@ -35,6 +37,7 @@ export function createSar() {
   let typedCount = 0;
   let pendingContinue = null;
   let state = "idle";
+  let appeared = false;
 
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -83,6 +86,10 @@ export function createSar() {
    */
   function say(message, options = {}) {
     stopTyping();
+    if (!appeared) {
+      appeared = true;
+      sfx("sar-appear");
+    }
     setState(options.state || "speaking");
     fullText = String(message || "");
     pendingContinue = typeof options.onContinue === "function" ? options.onContinue : null;
