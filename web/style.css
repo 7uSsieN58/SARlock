@@ -378,3 +378,13 @@ button:disabled {
 .progress-summary[data-complete="true"] {
     color: #b8f4ce;
 }
+
+/* Globe points for completed cases */
+#content-in-map-page .leftside .hotspot.is-complete{
+    background-color: #3a8f6b;
+    box-shadow: 0 0 0 4px rgba(111, 220, 164, 0.25);
+    animation-name: none;
+}
+#content-in-map-page .leftside .hotspot.is-complete .label{
+    background-color: #b8f4ce;
+}
