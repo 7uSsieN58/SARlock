@@ -43,7 +43,7 @@
     {
       "name": "Intro to Synthetic Aperture Radar (SAR) (NASA Earthdata)",
       "url": "https://www.earthdata.nasa.gov/learn/earth-observation-data-basics/sar",
-      "used_for": "Physical interpretation of L-band dual-polarization (HH/HV) backscatter, specular reflection, and surface roughness"
+      "used_for": "Physical interpretation of L-band dual-polarization (HH/HV) backscatter, scattering mechanisms (rough surface, volume, double bounce), and speckle reduction by multi-looking"
     },
     {
       "name": "NASA Scientific Visualization Studio (SVS) — Krasheninnikov Time-Lapse",

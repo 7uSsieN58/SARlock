@@ -107,7 +107,7 @@ for hs_id, xp, yp in hotspots_spec:
     hs_metrics[hs_id] = (b_hh, e_hh, b_hv, e_hv)
     print(f"{hs_id} ({xp}%, {yp}%) -> HH: {b_hh:.2f}->{e_hh:.2f} ({e_hh-b_hh:+.2f} dB) | HV: {b_hv:.2f}->{e_hv:.2f} ({e_hv-b_hv:+.2f} dB)")
 
-print(f"Scene-wide delta-dB std (speckle + terrain background scatter): HH={stats['HH']['diff_std']:.2f} dB, HV={stats['HV']['diff_std']:.2f} dB")
+print(f"Window-wide delta-dB std (speckle + terrain background scatter): HH={stats['HH']['diff_std']:.2f} dB, HV={stats['HV']['diff_std']:.2f} dB")
 
 # 3. Build Clean, Audited data/case-02-krasheninnikov/case-02.json
 case_data = {
@@ -297,7 +297,7 @@ case_data = {
                 "Rough, blocky newly emplaced rock scatters microwaves strongly back to the radar (cyan), whereas a smooth, fine-grained cover dampens small-scale roughness and lowers backscatter (red)."
             ],
             "responses": {
-                "correct": "Exactly right! Rough, blocky lava advancing east-northeast created strong surface and volume scattering (cyan), while fine volcanic tephra/ash blanketing the western flank smoothed the surface and dropped radar return (red).",
+                "correct": "Exactly right! The cyan zone, where rough, blocky lava appears to be advancing east-northeast, is consistent with strong surface and volume scattering. The red zone on the western flank is consistent with a smoother surface, such as a fine-grained cover or a moisture change, which lowers radar return; the data alone cannot tell these apart.",
                 "wrong": "Look closely at the radial, finger-like lobes emerging from the top of the central mound inside a circular caldera\u2014classic signatures of active lava flow emplacement (bright cyan) paired with fine volcanic ash deposition (red)."
             },
             "sar": {
@@ -312,7 +312,7 @@ case_data = {
             "reveal": {
                 "event_label": "Volcanic Eruption",
                 "source_ids": ["s3", "s4"],
-                "summary": "Krasheninnikov Volcano\u2014with no documented eruption since about 1550\u2014began erupting in early August 2025 (onset about 16:50 UTC on August 2, already August 3 in Kamchatka), a few days after the M8.8 Kamchatka earthquake of July 30 (local time; July 29 UTC). NASA describes the quake as apparently jolting the volcano awake; whether it triggered the eruption is a research hypothesis that this dataset does not test. NISAR first imaged the volcano on December 25, 2025, so our August 22 \u2013 October 9, 2026 pair shows mid-eruption change, not before versus after. Over these 48 days it is consistent with new rough lava advancing along the eastern flow field (cyan) and a backscatter drop on slopes west of the northern cone (red) that may reflect fine tephra among other possible causes.",
+                "summary": "Krasheninnikov Volcano\u2014with no documented eruption since about 1550\u2014began erupting in early August 2025 (onset about 16:38 UTC on August 2, already August 3 in Kamchatka), a few days after the M8.8 Kamchatka earthquake of July 30 (local time; July 29 UTC). NASA describes the quake as apparently jolting the volcano awake; whether it triggered the eruption is a research hypothesis that this dataset does not test. NISAR first imaged the volcano on December 25, 2025, so our August 22 \u2013 October 9, 2026 pair shows mid-eruption change, not before versus after. Over these 48 days it is consistent with new rough lava advancing along the eastern flow field (cyan) and a backscatter drop on slopes west of the northern cone (red) that may reflect fine tephra among other possible causes.",
                 "metrics": [
                     {
                         "label": "Eastern Lava Advance (hs-1, 3\u00d73 ROI)",
@@ -326,7 +326,7 @@ case_data = {
                     },
                     {
                         "label": "Unchanged-Surface Reference (hs-3, 3\u00d73 ROI)",
-                        "value": f"Mean HV stayed near zero change ({hs_metrics['hs-3'][2]:.2f} to {hs_metrics['hs-3'][3]:.2f} dB, {hs_metrics['hs-3'][3]-hs_metrics['hs-3'][2]:+.2f} dB; HH {hs_metrics['hs-3'][0]:.2f} to {hs_metrics['hs-3'][1]:.2f} dB, {hs_metrics['hs-3'][1]-hs_metrics['hs-3'][0]:+.2f} dB) against a scene-wide \u0394dB scatter of {stats['HV']['diff_std']:.2f} dB in HV (derived from s1 granules)",
+                        "value": f"Mean HV stayed near zero change ({hs_metrics['hs-3'][2]:.2f} to {hs_metrics['hs-3'][3]:.2f} dB, {hs_metrics['hs-3'][3]-hs_metrics['hs-3'][2]:+.2f} dB; HH {hs_metrics['hs-3'][0]:.2f} to {hs_metrics['hs-3'][1]:.2f} dB, {hs_metrics['hs-3'][1]-hs_metrics['hs-3'][0]:+.2f} dB) against a window-wide \u0394dB scatter of {stats['HV']['diff_std']:.2f} dB in HV (derived from s1 granules)",
                         "source_id": "s1"
                     }
                 ]
@@ -448,7 +448,7 @@ index_data = {
         {
             "name": "Intro to Synthetic Aperture Radar (SAR) (NASA Earthdata)",
             "url": "https://www.earthdata.nasa.gov/learn/earth-observation-data-basics/sar",
-            "used_for": "Physical interpretation of L-band dual-polarization (HH/HV) backscatter, specular reflection, and surface roughness"
+            "used_for": "Physical interpretation of L-band dual-polarization (HH/HV) backscatter, scattering mechanisms (rough surface, volume, double bounce), and speckle reduction by multi-looking"
         },
         {
             "name": "NASA Scientific Visualization Studio (SVS) — Krasheninnikov Time-Lapse",
