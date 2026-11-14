@@ -1,4 +1,4 @@
-﻿import os, re, json, pathlib
+import os, re, json, pathlib
 import numpy as np
 import asf_search as asf
 from PIL import Image
@@ -22,7 +22,7 @@ for web_file in pathlib.Path("web").glob("*.js"):
         print(f"NOTE: 'event_type' referenced in {web_file}")
 
 # 1. Paths & Grid Parameters (Path 132 / Frame 61 / DESCENDING, EPSG:32657)
-case_dir = pathlib.Path("data/case-02-krasheninnikov")
+case_dir = pathlib.Path("data/case-02-kamchatka")
 case_dir.mkdir(parents=True, exist_ok=True)
 
 R0_FULL, C0_FULL = 12315, 11941
@@ -109,7 +109,7 @@ for hs_id, xp, yp in hotspots_spec:
 
 print(f"Window-wide delta-dB std (speckle + terrain background scatter): HH={stats['HH']['diff_std']:.2f} dB, HV={stats['HV']['diff_std']:.2f} dB")
 
-# 3. Build Clean, Audited data/case-02-krasheninnikov/case-02.json
+# 3. Build Clean, Audited data/case-02-kamchatka/case-02.json
 case_data = {
     "schema_version": "5-experiences-v1",
     "id": "case-02",
@@ -425,8 +425,8 @@ index_data = {
             "event_type": "volcano",
             "lat": 54.593,
             "lng": 160.273,
-            "folder": "case-02-krasheninnikov",
-            "json_file": "case-02-krasheninnikov/case-02.json"
+            "folder": "case-02-kamchatka",
+            "json_file": "case-02-kamchatka/case-02.json"
         }
     ],
     "nasa_resources": [
